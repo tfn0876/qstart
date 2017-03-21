@@ -22,9 +22,11 @@
       '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
       '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
-
+      'ng2-pdf-viewer': 'npm:ng2-pdf-viewer',
+      'pdfjs-dist': 'npm:pdfjs-dist',
+      'angular2-jwt': 'npm:angular2-jwt/angular2-jwt.js',
       // other libraries
-      'rxjs':                      'npm:rxjs',
+      'rxjs': 'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -34,7 +36,14 @@
       },
       rxjs: {
         defaultExtension: 'js'
-      }
+      },
+      'ng2-pdf-viewer': {
+        main: 'dist/index.js',
+        defaultExtension: 'js'
+      },
+      'pdfjs-dist': {
+        defaultExtension: 'js'
+      },
     }
   });
 })(this);

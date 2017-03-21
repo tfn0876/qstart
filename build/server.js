@@ -11,8 +11,20 @@ var courses = require('./routes/courses');
 var upload = require('./routes/upload');
 var students = require('./routes/student');
 var users = require('./routes/users');
+var crypto = require("crypto");
+var mime = require("mime");
 var app = express();
 var staticRoot = __dirname + '/';
+
+// connect to mongoose
+mongoose.connect(config.database);
+mongoose.connection.on('connected', () => {
+  console.log('connected to database ' + config.database);
+});
+mongoose.connection.on('error', (err) => {
+  console.log('Error in connecting database  ' + err);
+});
+
 
 app.set('port', (process.env.PORT || 3000));
 

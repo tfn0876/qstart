@@ -1,0 +1,193 @@
+<div class="accordion" data-role="accordion" data-close-any="true">
+    <div class="frame">
+        <div class="heading">Attendance Setting <span *ngIf="attendances">{{calAttendance()}}</span><span class="mif-home icon"></span></div>
+        <div class="content">
+            <button class="button primary" (click)="generateAttence()">Auto Generate Attendance Template</button>
+            <button [disabled]="attendanceSaveHidden" class="button primary" (click)="saveAttendanceChange()">Save</button>
+            <ul class="treeview">
+                <li *ngFor="let attendance of attendances">
+                    <label class="switch"> Holiday?
+                        <input type="checkbox" [(ngModel)]="attendance.isHoliday" (ngModelChange)="changeAttendance()" name="active" class="form-control">
+                        <span class="check"></span>
+                </label> {{attendance.date | date : 'y-MM-dd EEEE'}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="frame">
+        <div class="heading">Grade Items <span *ngIf="gradeItems">{{calTotal()}}</span><span class="mif-home icon"></span></div>
+        <div class="content">
+            <span class="AddMode" *ngIf="newGradeItem">
+                <input type="text" [(ngModel)]="newGradeItem.name" name="title" class="form-control" placeholder="Input name...">
+                <input type="text" [(ngModel)]="newGradeItem.type" name="title" class="form-control" placeholder="Input type...">
+                <input type="number" [(ngModel)]="newGradeItem.fullScore" min="0" name="title" class="form-control" placeholder="Input full score...">
+            </span>
+            <span [hidden]="gradeItemAdd">
+                <button class="button primary" (click)="addGradeItem()">ADD</button>
+            </span>
+            <span [hidden]="!gradeItemAdd">
+                <button class="button primary" (click)="saveGradeItem()">Save</button>
+                <button class="button danger" (click)="cancelGradeItem()">Cancel</button>
+            </span>
+            <table *ngIf="gradeItems" class="bordered">
+                <thead>
+                    <tr>
+                        <th class="name">ITEM NAME</th>
+                        <th class="type">GRADE TYPE</th>
+                        <th class="score">FULL SCORE</th>
+                        <th class="manage">MANAGE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let gradeItem of gradeItems">
+                        <td class="name">
+                            <span [hidden]="gradeItem.editState"> {{gradeItem.name}} </span>
+                            <input type="text" [hidden]="!gradeItem.editState" [(ngModel)]="gradeItem.name" name="title" class="form-control" placeholder="Edit name...">
+                        </td>
+                        <td class="type">
+                            <span [hidden]="gradeItem.editState"> {{gradeItem.type}} </span>
+                            <input type="text" [hidden]="!gradeItem.editState" [(ngModel)]="gradeItem.type" name="title" class="form-control" placeholder="Edit type...">
+                        </td>
+                        <td class="score">
+                            <span [hidden]="gradeItem.editState"> {{gradeItem.fullScore}} </span>
+                            <input type="number" [hidden]="!gradeItem.editState" [(ngModel)]="gradeItem.fullScore" min="0" name="title" class="form-control"
+                                placeholder="Edit type...">
+                        </td>
+                        <td class="manage">
+                            <span [hidden]="gradeItem.editState">  
+                                <a class="button primary" type="button" (click)="editGradeItem(gradeItem)">Edit</a>
+                                 <a class="button danger" type="button" (click)="deleteGradeItem(gradeItem)">Delete</a>
+                            </span>
+                            <span [hidden]="!gradeItem.editState">                  
+                                <a class="button primary" type="button" (click)="updateGradeItem(gradeItem)">Save</a>
+                                <a class="button danger" type="button" (click)="editGradeItem(gradeItem)">Cancel</a>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="frame">
+        <div class="heading">Grade Rules {{calcRules()}}<span class="mif-home icon"></span></div>
+        <div class="content">
+            <span class="AddMode" *ngIf="newGradeRule">
+                 <div class="input-control range">
+                     <input type="range" [(ngModel)]="newGradeRule.requiredScore" min="0" max="{{getTotal()}}">
+                 </div>
+                 <input type="number" [(ngModel)]="newGradeRule.requiredScore" min="0" max="{{getTotal()}}">
+            </span>
+            <span [hidden]="gradeRuleAdd">
+                <button class="button primary" (click)="addGradeRule()">ADD</button>
+            </span>
+            <span [hidden]="!gradeRuleAdd">
+                <button class="button primary" (click)="saveGradeRule()">Save</button>
+                <button class="button danger" (click)="cancelGradeRule()">Cancel</button>
+            </span>
+            <table *ngIf="gradeRules" class="bordered">
+                <thead>
+                    <tr>
+                        <th class="min">MIN REQUIRED</th>
+                        <th class="percent">PERCENTAGE</th>
+                        <th class="score">LETTER GRADE(Ab: 0)</th>
+                        <th class="score">LETTER GRADE(Ab: 1)</th>
+                        <th class="score">LETTER GRADE(Ab: 2)</th>
+                        <th class="score">LETTER GRADE(Ab: 3,3+)</th>
+                        <th class="manage">MANAGE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let gradeRule of gradeRules">
+                        <td class="min">
+                            <div [hidden]="!gradeRule.editState">
+                                <div class="input-control range">
+                                    <input type="range" [(ngModel)]="gradeRule.requiredScore" min="0" max="{{getTotal()}}">
+                                </div>
+                                <input type="number" [(ngModel)]="gradeRule.requiredScore" min="0" max="{{getTotal()}}">
+                            </div>
+                            <span [hidden]="gradeRule.editState"> {{gradeRule.requiredScore}} </span>
+                        </td>
+                        <td class="percent">
+                            <span> {{getPercent(gradeRule) | percent:'.2'}} </span>
+                        </td>
+                        <td class="score">
+                            <span [hidden]="gradeRule.editState"> {{gradeRule.letterGradeAbsenceNone}} </span>
+                            <input type="text" [hidden]="!gradeRule.editState" [(ngModel)]="gradeRule.letterGradeAbsenceNone" name="letterGradeAbsenceNone"
+                                class="form-control" placeholder="A+, B, C, C- ect...">
+                        </td>
+                        <td class="score">
+                            <span [hidden]="gradeRule.editState"> {{gradeRule.letterGradeAbsenceOne}} </span>
+                            <input type="text" [hidden]="!gradeRule.editState" [(ngModel)]="gradeRule.letterGradeAbsenceOne" name="letterGradeAbsenceOne"
+                                class="form-control" placeholder="A+, B, C, C- ect...">
+                        </td>
+                        <td class="score">
+                            <span [hidden]="gradeRule.editState"> {{gradeRule.letterGradeAbsenceTwo}} </span>
+                            <input type="text" [hidden]="!gradeRule.editState" [(ngModel)]="gradeRule.letterGradeAbsenceTwo" name="letterGradeAbsenceTwo"
+                                class="form-control" placeholder="A+, B, C, C- ect...">
+                        </td>
+                        <td class="score">
+                            <span [hidden]="gradeRule.editState"> {{gradeRule.letterGradeAbsenceThreePlus}} </span>
+                            <input type="text" [hidden]="!gradeRule.editState" [(ngModel)]="gradeRule.letterGradeAbsenceThreePlus" name="letterGradeAbsenceThreePlus"
+                                class="form-control" placeholder="A+, B, C, C- ect...">
+                        </td>
+                        <td class="manage">
+                            <span [hidden]="gradeRule.editState">  
+                                <a class="button primary" type="button" (click)="editGradeRule(gradeRule)">Edit</a>
+                                 <a class="button danger" type="button" (click)="deleteGradeRule(gradeRule)">Delete</a>
+                            </span>
+                            <span [hidden]="!gradeRule.editState">                  
+                                <a class="button primary" type="button" (click)="updateGradeRule(gradeRule)">Save</a>
+                                <a class="button danger" type="button" (click)="editGradeRule(gradeRule)">Cancel</a>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="frame">
+        <div class="heading">FILES UPLOAD {{CalcUpload()}}<span class="mif-home icon"></span></div>
+        <div class="content">
+            <button (click)="showDialog = !showDialog" class="button primary">Upload</button>
+            <upload-dialog *ngIf="courseSession" [(visible)]="showDialog" [(courseSessions)]="courseSession">
+            </upload-dialog>
+            <table *ngIf="courseSession && courseSession.files" class="bordered">
+                <thead>
+                    <tr>
+                        <th>Link </th>
+                        <th> Syllabus? </th>
+                        <th> NAME </th>
+                        <th> Uploaded Date </th>
+                        <th> Uploaded By </th>
+                        <th> DELETE </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let file of courseSession.files">
+                        <td>
+                            <a target="blank" href="{{file.url}}">  <span class="mif-file-word mif-2x fg-red"> </span></a>
+                        </td>
+                        <td>
+                            <label class="switch"> 
+                               <input type="checkbox" [(ngModel)]="file.isSyllabus" (ngModelChange)="changeIsSyllabus(file)" name="active" class="form-control">
+                            <span class="check"> </span>
+                            </label>
+                        </td>
+                        <td>
+                            {{file.name}}
+                        </td>
+                        <td>
+                            {{file.uploadedDate | date : 'y-MM-dd'}}
+                        </td>
+                        <td>
+                            {{file.uploadedBy}}
+                        </td>
+                        <td class="manage">
+                            <a class="button danger" type="button" (click)="deleteFile(file)">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

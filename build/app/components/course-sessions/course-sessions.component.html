@@ -1,0 +1,84 @@
+<div *ngIf="course">
+    <h2>{{course.code}} - {{course.title}}
+        <button class="button primary" (click)="goBack()">Back</button>
+    </h2>
+    <p>{{course.description}}</p>
+</div>
+<div class="grid">
+    <div class="row cells12 flex-just-end">
+        <div class="cell offset7 colspan1">
+            <a class="button primary" type="button" (click)="addNewCourseSession()">New Session</a>
+        </div>
+        <div class="cell colspan2">
+            <div class="input-control text">
+                <label>Filter</label>
+                <input type="text" [(ngModel)]="filter" name="Filter" class="form-control" placeholder="Type keyword.." (ngModelChange)="applyfilter()">
+            </div>
+        </div>
+    </div>
+</div>
+<h3>Course Sessions</h3>
+
+<table *ngIf="courseSessions" class="dataTable border">
+    <thead>
+        <tr>
+            <th class="title">Name</th>
+            <th class="code">PROFESSOR</th>
+            <th class="duration">DURATION</th>
+            <th class="dayOfWeek">DAY OF WEEK</th>
+            <th class="manage">MANAGE</th>
+        </tr>
+    </thead>
+    <tbody> 
+        <tr *ngFor="let session of courseSessions">
+            <td class="title">
+                <div class="input-control text">
+                    <span [hidden]="session.editState"> {{session.name}} </span>
+                    <input [hidden]="!session.editState" type="text" [(ngModel)]="session.name" name="title" class="form-control" placeholder="Edit name...">
+                </div> 
+            </td>
+            <td class="code">
+                <div class="input-control text">
+                    <span [hidden]="session.editState">  {{session.professor}} </span>
+                    <!--May be dropdown in the future-->
+                    <input [hidden]="!session.editState" type="text" [(ngModel)]="session.professor" name="code" class="form-control" placeholder="Edit professor...">
+                </div>
+            </td>
+            <td class="duration">
+                <div class="input-control text">
+                    <span [hidden]="session.editState"> {{session.startDate | date}} To {{session.endDate | date}}</span>
+                    <div [hidden]="!session.editState">
+                        <div class="row cells12">
+                            <div class="colspan5">
+                                <input type="date" class="form-control" [ngModel]="session.startDate | date:'y-MM-dd'" (ngModelChange)="session.startDate = $event"
+                                    name="startDate">
+                            </div>
+                            <div class="colspan5">
+                                <input type="date" class="form-control" [ngModel]="session.endDate | date:'y-MM-dd'" (ngModelChange)="session.endDate = $event"
+                                    name="endDate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td class="dayOfWeek">
+                <div class="input-control text">
+                    <span [hidden]="session.editState">  {{session.daysOftheWeek | dayofweek}} </span>
+                    <!--May be dropdown in the future-->
+                    <input [hidden]="!session.editState" type="text" [(ngModel)]="session.daysOftheWeek" name="daysOftheWeek" class="form-control" placeholder="0 to 6, 0 for Sunday, 6 for Starday">
+                </div>
+            </td>
+            <td class="manage">
+                <span [hidden]="session.editState">  
+                    <a class="button primary" type="button" (click)="editCourseSession(session)">Edit</a>
+                    <a class="button info" type="button" [routerLink]="['/session-detail', session._id]">Detail</a>
+                    <a class="button danger" type="button" (click)="deleteCourseSession(session)">Delete</a>
+                </span>
+                <span [hidden]="!session.editState">                  
+                    <a class="button primary" type="button" (click)="updateCourseSession(session)">Save</a>
+                    <a class="button danger" type="button" (click)="editCourseSession(session)">Cancel</a>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>

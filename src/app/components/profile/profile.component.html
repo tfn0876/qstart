@@ -1,0 +1,52 @@
+<h2>Edit Profile</h2>
+<form (submit)="onProfileSubmit()">
+    <div class='grid'>
+
+            <!-- Username-->
+        <div class='row'>
+        <div class='cell'>
+            <label>Username</label>
+            <div class="input-control text">
+        <input placeholder="Username..." type="text" [(ngModel)]="currentUser.username" name="username" disabled>
+            </div>
+        </div>
+        </div>
+
+
+        <!-- Name -->
+        <div class='row'>
+        <div class='cell'>
+            <label>Name</label>
+            <div class="input-control text">
+                <input placeholder="Name..." type="text" [(ngModel)]='currentUser.name' name="name">  
+            </div>
+        </div>
+        </div>
+
+
+        <!--Email-->
+        <div class='row'>
+        <div class='cell'>
+            <label>Email</label>
+            <div class="input-control text">
+                <input placeholder="Email..." type="text" [(ngModel)]="currentUser.email" name="email">
+            </div>
+        </div>
+        </div>
+
+        <!--Password-->
+        <div class='row'>
+        <div class='cell'>
+            <label>Password</label>
+            <div class="input-control text">
+                <input placeholder="Password..." type="text" [(ngModel)]="currentUser.password" name="password">
+            </div>
+        </div>
+        </div>
+        <div class='row'>
+        <div class='cell'>
+        <input type="submit" value="Update Profile">
+        </div>
+        </div>
+    </div>
+</form>

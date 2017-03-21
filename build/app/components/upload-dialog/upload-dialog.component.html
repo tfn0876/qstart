@@ -1,0 +1,51 @@
+<div class="panel" [@dialog] *ngIf="visible" class="dialog">
+    <div class="heading">
+        <span class="title">Upload Panel For {{courseSessions.name}}</span>
+        <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn">X</button>
+    </div>
+    <div class="content">
+        <input type="file" ng2FileSelect [uploader]="uploader" />
+
+        <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+            class="my-drop-zone">
+            DROP ZONE
+        </div>
+        <table class="dataTable border">
+            <thead>
+                <tr>
+                    <th width="50%">Name</th>
+                    <th>Size</th>
+                    <th>Progress</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                    <td>{{ item?.file?.size/1024 | number: '.2' }} KB</td>
+                    <td>
+                        <progress value={{item.progress}} max="100"></progress>
+                    </td>
+                    <td class="text-center">
+                        <span *ngIf="item.isSuccess"><i class="mif-checkmark fg-green"></i></span>
+                        <span *ngIf="item.isCancel"><i class="mif-cancel fg-orange"></i></span>
+                        <span *ngIf="item.isError"><i class="mif-cross fg-red"></i></span>
+                    </td>
+                    <td>
+                        <button class="primary" type="button" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                            Upload
+                        </button>
+                        <button class="info" type="button" (click)="item.cancel()" [disabled]="!item.isUploading">
+                            Cancel
+                        </button>
+                        <button class="danger" type="button" (click)="item.remove()">
+                            Remove
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngIf="visible" class="overlay" (click)="close()"></div>

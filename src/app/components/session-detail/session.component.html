@@ -1,0 +1,17 @@
+<div *ngIf="course">
+    <h2>{{course.code}} - {{course.title}} - {{courseSession.name}} <button class="button primary" (click)="goBack()">Back</button></h2>
+    <h6>Professor: {{courseSession.professor}}</h6>
+    <p><em>Date: {{courseSession.startDate | date}}</em> To <em>{{courseSession.endDate | date}}</em>, Day of Week: {{courseSession.daysOftheWeek
+        | dayofweek}} </p>
+    <p>{{course.description}}</p>
+</div>
+<nav class="sessionManage">
+    <a *ngIf="courseSession && courseSession.attendanceTemplate" routerLink="attendance" routerLinkActive="active" class="button lighten"><span class="icon mif-clipboard"></span>ATTENDANCE</a>
+    <a *ngIf="courseSession && courseSession.gradeItems && courseSession.gradeItems" routerLink="grading" routerLinkActive="active"
+        class="button lighten"><span class="icon mif-trophy"></span>GRADING</a>
+    <a routerLink="currentStudents" routerLinkActive="active" class="button lighten"><span class="icon mif-users"></span>CURRENT STUDENTS</a>
+    <a routerLink="register" routerLinkActive="active" class="button lighten"><span class="icon mif-user-plus"></span>REGISTER</a>
+    <a routerLink="syllabus" routerLinkActive="active" class="button lighten"><span class="icon mif-calendar"></span>SYLLABUS</a>
+    <a routerLink="setting" routerLinkActive="active" class="button lighten"><span class="icon mif-tools"></span>SETTING</a>
+</nav>
+<router-outlet></router-outlet>

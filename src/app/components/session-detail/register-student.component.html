@@ -1,0 +1,50 @@
+<div class="grid">
+    <div class="row cells12 flex-just-end">
+        <div class="cell colspan2">
+            <div class="input-control text">
+                <label>Filter</label>
+                <input type="text" [(ngModel)]="filter" name="Filter" class="form-control" placeholder="Type keyword.." (ngModelChange)="applyfilter()">
+            </div>
+        </div>
+    </div>
+</div>
+<table *ngIf="students" class="dataTable border">
+    <thead>
+        <tr>
+            <th class="active">ACTIVE</th>
+            <th class="firstName">FIRST NAME</th>
+            <th class="lastName">LAST NAME</th>
+            <th class="email">EMAIL</th>
+            <th class="phone">PHONE</th>
+            <th class="register">REGISTER THIS SESSION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let student of students">
+            <td class="active">
+                <p [hidden]="!student.active"><span class="mif-user-check fg-green"></span></p>
+                <p [hidden]="student.active"><span class="mif-user fg-grayLighter"></span></p>
+            </td>
+            <td class="firstName">
+                <span> {{student.firstName}} </span>
+            </td>
+            <td class="lastName">
+                <span> {{student.lastName}} </span>
+            </td>
+            <td class="email">
+                <a href="mailto:{{student.email}}?Subject=Sent%20From%20Students%20Tool">
+                    <span class="mif-mail"> {{student.email}} </span>
+                </a>
+            </td>
+            <td class="phone">
+                <span> {{student.phone}} </span>
+            </td>
+            <td class="register">
+                <label class="switch">
+                        <input type="checkbox" [disabled]="!student.active" [(ngModel)]="student.registered" (ngModelChange)="registerStudent(student)" name="active" class="form-control">
+                        <span class="check"></span>
+                </label>
+            </td>
+        </tr>
+    </tbody>
+</table>

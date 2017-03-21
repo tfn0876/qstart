@@ -1,0 +1,46 @@
+<h2>Register</h2>
+<form (submit)="onRegisterSubmit()">
+    <div class='grid'>
+        <!-- Name -->
+        <div class='row'>
+        <div class='cell'>
+            <label>Name</label>
+            <div class="input-control text">
+                <input placeholder="Name..." type="text" [(ngModel)]='name' name="name">  
+            </div>
+        </div>
+        </div>
+        <!--Email-->
+        <div class='row'>
+        <div class='cell'>
+            <label>Email</label>
+            <div class="input-control text">
+                <input placeholder="Email..." type="text" [(ngModel)]="email" name="email">
+            </div>
+        </div>
+        </div>
+        <!-- Usernaem-->
+        <div class='row'>
+        <div class='cell'>
+            <label>Username</label>
+            <div class="input-control text">
+                <input placeholder="Username..." type="text" [(ngModel)]=username name="username">
+            </div>
+        </div>
+        </div>
+        <!--Password-->
+        <div class='row'>
+        <div class='cell'>
+            <label>Password</label>
+            <div class="input-control text">
+                <input placeholder="Password..." type="password" [(ngModel)]="password" name="password">
+            </div>
+        </div>
+        </div>
+        <div class='row'>
+        <div class='cell'>
+        <input type="submit" value="Submit">
+        </div>
+        </div>
+    </div>
+</form>

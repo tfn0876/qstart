@@ -1,0 +1,6 @@
+<div *ngIf="file" id="pdfview">
+    <div class="input-control range">
+        <span></span><input type="range" [(ngModel)]="zoom" min=".5" max="2.5" step="any"><span></span>
+    </div>
+    <pdf-viewer [src]="file.url" [zoom]="zoom" [page]="1" [show-all]="true" style="display: block;"></pdf-viewer>
+</div>

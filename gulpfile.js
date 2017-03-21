@@ -66,7 +66,12 @@ gulp.task("libs", () => {
       'reflect-metadata/Reflect.js',
       'rxjs/**/*.js',
       'zone.js/dist/**',
-      '@angular/**/bundles/**'
+      '@angular/**/bundles/**',
+      "metro-ui/build/**",
+      "metro-ui/docs/js/**",
+      "pdfjs-dist/build/**",
+      "ng2-pdf-viewer/dist/**",
+      "angular2-jwt/**"
     ], {
       cwd: "node_modules/**"
     }) /* Glob required here. */

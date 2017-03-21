@@ -1,0 +1,59 @@
+<h2>Courses</h2>
+<div class="grid">
+    <div class="row cells12 flex-just-end">
+        <div class="cell colspan1">
+              <a class="button primary" type="button" (click)="addNewCourse()">New Course</a>
+        </div>
+        <div class="cell colspan2">
+            <div class="input-control text">
+                <label>Filter</label>
+                <input type="text" [(ngModel)]="filter" name="Filter" class="form-control" placeholder="Type keyword.." (ngModelChange)="applyfilter()">
+            </div>
+        </div>
+    </div>
+</div>
+<table *ngIf="courses" class="dataTable border">
+    <thead>
+        <tr>
+            <th class="title">TITLE</th>
+            <th class="code">CODE</th>
+            <th class="description">DESCRIPTION</th>
+            <th class="manage">MANAGE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let course of courses">
+            <td class="title">
+                <div class="input-control text">
+                    <span [hidden]="course.editState"> {{course.title}} </span>
+                    <input [hidden]="!course.editState" type="text" [(ngModel)]="course.title" name="title" class="form-control" placeholder="Edit Course...">
+                </div>
+            </td>
+            <td class="code">
+                <div class="input-control text">
+                    <span [hidden]="course.editState">  {{course.code}} </span>
+                    <input [hidden]="!course.editState" type="text" [(ngModel)]="course.code" name="code" class="form-control" placeholder="Edit Code...">
+                </div>
+            </td>
+
+            <td class="description">
+                <div class="input-control text">
+                    <span data-toggle="bottom" data-original-title="course.description"  [hidden]="course.editState">  {{course.description | truncate}} </span>               
+                    <input [hidden]="!course.editState" type="text" [(ngModel)]="course.description" name="description" class="form-control"
+                        placeholder="Edit Description...">
+                </div>
+            </td>
+            <td class="manage">
+                <span [hidden]="course.editState">  
+                    <a class="button primary" type="button" (click)="editCourse(course)">edit</a>
+                    <a class="button info" type="button" [routerLink]="['/course-detail', course._id]">Detail</a>
+                    <input class="button danger" type="button" (click)="deleteCourse(course)" value="Delete">
+                </span>
+                <span [hidden]="!course.editState">                  
+                <a class="button primary" type="button" (click)="updateCourse(course)">Save</a>
+                <a class="button danger" type="button" (click)="editCourse(course)">Cancel</a>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>

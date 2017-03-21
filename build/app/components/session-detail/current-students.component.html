@@ -1,0 +1,53 @@
+<div class="grid">
+    <div class="row cells12 flex-just-end">
+        <div *ngIf="loaded" class="cell offset7 colspan1">
+            <a class="button primary" type="button" href="mailto:{{emailsAll}}"><span class="mif-mail"></span>EMAIL</a>
+        </div>
+        <div class="cell colspan2">
+            <div class="input-control text">
+                <label>Filter</label>
+                <input type="text" [(ngModel)]="filter" name="Filter" class="form-control" placeholder="Type keyword.." (ngModelChange)="applyfilter()">
+            </div>
+        </div>
+    </div>
+</div>
+<table *ngIf="loaded" class="dataTable border">
+    <thead>
+        <tr>
+            <th class="active">SESSION ACTIVE</th>
+            <th class="firstName">FIRST NAME</th>
+            <th class="lastName">LAST NAME</th>
+            <th class="email">EMAIL</th>
+            <th class="phone">PHONE</th>
+            <th class="register">DROP THE SESSION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let studentSession of studentSessions">
+            <td class="active">
+                <p [hidden]="studentSession.dropClass"><span class="mif-user-check fg-green"></span></p>
+                <p [hidden]="!studentSession.dropClass"><span class="mif-user fg-grayLighter"></span></p>
+            </td>
+            <td class="firstName">
+                <span> {{studentSession.student.firstName}} </span>
+            </td>
+            <td class="lastName">
+                <span> {{studentSession.student.lastName}} </span>
+            </td>
+            <td class="email">
+                <a href="mailto:{{studentSession.student.email}}?Subject=Sent%20From%20Students%20Tool">
+                    <span class="mif-mail"> {{studentSession.student.email}} </span>
+                </a>
+            </td>
+            <td class="phone">
+                <span> {{studentSession.student.phone}} </span>
+            </td>
+            <td class="register">
+                <label class="switch">
+                        <input type="checkbox" [(ngModel)]="studentSession.dropClass" (ngModelChange)="dropStudent(studentSession)" name="active" class="form-control">
+                        <span class="check"></span>
+                </label>
+            </td>
+        </tr>
+    </tbody>
+</table>

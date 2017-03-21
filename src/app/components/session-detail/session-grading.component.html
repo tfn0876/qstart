@@ -1,0 +1,79 @@
+<div class="grid">
+    <div class="row cells12 flex-just-end">
+        <div *ngIf="loaded" class="cell offset6 colspan1">
+            <a class="button warning" type="button" (click)="ResetGrading()"><span class="mif-loop2"></span> RESET</a>
+        </div>
+        <div class="cell colspan6">
+            <label class="input-control checkbox">
+                <input type="checkbox" [(ngModel)]="totalDigit">
+                <span class="check"></span>
+                <span class="caption">Digit Grade</span>
+            </label>
+            <label class="input-control checkbox">
+                <input type="checkbox" [(ngModel)]="totalPercent">
+                <span class="check"></span>
+                <span class="caption">Percentage Grade</span>
+            </label>
+            <label class="input-control checkbox">
+                <input type="checkbox" [(ngModel)]="totalLetter">
+                <span class="check"></span>
+                <span class="caption">Letter Grade</span>
+            </label>
+            <button class="button primary" (click)="calcuateLetter()"> Calculate Letter</button>
+            <button class="button primary" (click)="SaveGradingChange()"> Save</button>
+        </div>
+        <div class="cell colspan2">
+            <div class="input-control text">
+                <label>Filter</label>
+                <input type="text" [(ngModel)]="filter" name="Filter" class="form-control" placeholder="Type keyword.." (ngModelChange)="applyfilter()">
+            </div>
+        </div>
+    </div>
+</div>
+<table *ngIf="loaded" class="dataTable border gradeSheet">
+    <thead>
+        <tr>
+            <th class="name">STUDENT</th>
+            <th *ngFor="let gradeItem of courseSession.gradeItems" class="gradeItem">{{gradeItem.name}}({{gradeItem.fullScore}})</th>
+            <th class="absence">ABSENCE</th>
+            <th class="total">TOTAL</th>
+            <th class="manage">MANAGE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let studentSession of studentSessions">
+            <td class="name">
+                {{studentSession.student.firstName}} {{studentSession.student.lastName}}
+            </td>
+            <td *ngFor="let gradeItem of studentSession.gradeItems" class="gradeItem">
+                <span [hidden]="studentSession.editState || !gradeItem.score"> {{gradeItem.score}} out of {{gradeItem.fullScore}}</span>
+                <div [hidden]="!studentSession.editState">
+                    <div class="input-control range">
+                        <input type="range" [(ngModel)]="gradeItem.score" min="0" max="{{gradeItem.fullScore}}">
+                    </div>
+                    <input [hidden]="!studentSession.editState" type="number" min="0" max="{{gradeItem.fullScore}}" [(ngModel)]="gradeItem.score"
+                        name="score" placeholder="{{gradeItem.name}}">
+                </div>
+            </td>
+            <td class="absence">
+                <p><span>{{getAbsence(studentSession)}}</span></p>
+            </td>
+            <td class="total">
+                <span [hidden]="studentSession.editState || !totalDigit">{{calcTotalDigit(studentSession)}} |</span>
+                <span [hidden]="studentSession.editState || !totalPercent"> {{calcTotalPercent(studentSession) | percent:'.2'}} |</span>
+                <span [hidden]="studentSession.editState || !totalLetter"> {{studentSession.finalGrade}}</span>
+                <input [hidden]="!studentSession.editState || !totalLetter" type="text" [(ngModel)]="studentSession.finalGrade" name="score"
+                    placeholder="Letter Grade">
+            </td>
+            <td class="manage">
+                <span [hidden]="studentSession.editState">  
+                    <a class="button primary" type="button" (click)="editGrade(studentSession)">Edit</a>
+                </span>
+                <span [hidden]="!studentSession.editState">                  
+                    <a class="button primary" type="button" (click)="updateGrade(studentSession)">Save</a>
+                    <a class="button danger" type="button" (click)="editGrade(studentSession)">Cancel</a>
+               </span>
+            </td>
+        </tr>
+    </tbody>
+</table>

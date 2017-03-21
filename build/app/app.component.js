@@ -9,16 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var course_service_1 = require('./services/course.service');
+var auth_service_1 = require('./services/auth.service');
+var router_1 = require('@angular/router');
 var AppComponent = (function () {
-    function AppComponent() {
-        this.name = 'Angular';
+    function AppComponent(_authService, _router) {
+        this._authService = _authService;
+        this._router = _router;
     }
+    AppComponent.prototype.isActive = function () {
+        //return !this._authService.isLoggedIn();
+        return !this._authService.isLoggedIn();
+    };
     AppComponent = __decorate([
         core_1.Component({
+            moduleId: module.id,
             selector: 'my-app',
-            template: "<h1>Hello {{name}}</h1>",
+            templateUrl: 'app.component.html',
+            providers: [course_service_1.CourseService, auth_service_1.AuthService],
+            styles: [
+                ".my-padding-class {\n    padding-top: 0px;\n  }\n  "
+            ]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.Router])
     ], AppComponent);
     return AppComponent;
 }());

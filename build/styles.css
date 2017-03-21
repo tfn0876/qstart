@@ -1,5 +1,228 @@
-h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.page-content {
+    padding-top: 3.125rem;
+    min-height: 100%;
+    height: 100%;
+}
+
+.table .input-control.checkbox {
+    line-height: 1;
+    min-height: 0;
+    height: auto;
+}
+
+#cell-sidebar {
+    flex-basis: 52px;
+}
+
+#cell-content {
+    flex-basis: calc(100% - 52px);
+    overflow: scroll;
+}
+
+.dataTable td {
+    border-right: #afa9a9 1px solid;
+    border-bottom: #afa9a9 1px solid;
+}
+
+.input-control.text,
+.input-control.select,
+.input-control.file,
+.input-control.password,
+.input-control.number,
+.input-control.email,
+.input-control.tel {
+    width: 100% !important;
+}
+
+table .active {
+    width: 10%;
+}
+
+table .firstName {
+    width: 20%;
+}
+
+table .lastName {
+    width: 20%;
+}
+
+table .email {
+    width: 20%;
+}
+
+table .phone {
+    width: 20%;
+}
+
+table .register {
+    width: 10%;
+}
+
+.sessionManage a.active {
+    background-color: #2086bf;
+    color: white;
+}
+
+.sessionManage a:hover {
+    background-color: lightskyblue;
+    color: white;
+}
+
+.button.loading-pulse {
+    position: relative;
+}
+
+.button:disabled,
+.button.disabled {
+    background-color: #eaeaea !important;
+    color: #bebebe !important;
+    cursor: default;
+    border-color: transparent;
+}
+
+table.attendanceSheet .name {
+    width: 150px;
+}
+
+table.attendanceSheet .date {
+    width: 5%;
+}
+
+table.attendanceSheet .date.holiday {
+    background-color: #eaeaea !important;
+    color: #bebebe !important;
+}
+
+button.button.hasNote {
+    color: red !important;
+}
+
+.stickyNote {
+    display: block;
+    width: 300px;
+    position: absolute;
+    top: 10%;
+    background-color: #f9ef89;
+    right: 10%;
+    padding: 5px;
+    height: 300px;
+    z-index: 1000;
+}
+
+.stickyNote textarea {
+    background-color: #f9ef89;
+}
+
+span.pull-right.mif-cancel {
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+}
+
+table.bordered td,
+table.bordered th {
+    border-right: 1px solid;
+}
+
+table.bordered tr {
+    border-bottom: 1px solid;
+}
+
+table.bordered {
+    border: 1px solid;
+}
+
+.gradeSheet .name {
+    width: 150px;
+}
+
+.gradeSheet .gradeItem {
+    width: 12%;
+}
+
+.gradeSheet .absence {
+    width: 7%;
+}
+
+.gradeSheet .total {
+    width: 12%;
+}
+
+.gradeSheet .gradeItem input,
+.gradeSheet .total input {
+    width: 90%;
+}
+
+.gradeSheet .manage {
+    width: 13%;
+}
+
+nav span.icon {
+    top: -2px;
+    left: -3px;
+    position: relative;
+}
+
+.my-drop-zone {
+    border: dotted 3px lightgray;
+    height: 100px;
+}
+
+.nv-file-over {
+    border: dotted 3px green;
+}
+
+progress {
+    width: 100%;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.dialog {
+  z-index: 1000;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: 200px;
+  width: 90%;
+  max-width: 700px;
+  background-color: #fff;
+  padding: 12px;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 768px) {
+  .dialog {
+    top: 40px;
+  }
+}
+
+.dialog__close-btn {
+  border: 0;
+  background: none;
+  color: #2d2d2d;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1.2em;
+}
+#pdfview{
+    height: 600px;
+    overflow: scroll;
 }
