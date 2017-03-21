@@ -43,14 +43,14 @@ gulp.task("compile", ["tslint"], () => {
  * Copy all resources that are not TypeScript files into build directory.
  */
 gulp.task("resources", ['server'], () => {
-  return gulp.src(["src/**/*", "!**/*.ts", "!src/**/server.js", "!src/**/package.json"])
+  return gulp.src(["src/**/*", "!**/*.ts"])
     .pipe(gulp.dest("build"));
 });
 
 /* copy node server to build folder */
 gulp.task("server", function () {
   return gulp.src(["server.js", "package.json"], {
-      cwd: "src/server/**"
+      cwd: "src/**"
     })
     .pipe(gulp.dest("build"));
 });
