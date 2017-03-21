@@ -30,16 +30,6 @@ body {
     border-bottom: #afa9a9 1px solid;
 }
 
-.input-control.text,
-.input-control.select,
-.input-control.file,
-.input-control.password,
-.input-control.number,
-.input-control.email,
-.input-control.tel {
-    width: 100% !important;
-}
-
 table .active {
     width: 10%;
 }
