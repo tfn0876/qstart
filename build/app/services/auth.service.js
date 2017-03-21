@@ -52,6 +52,9 @@ var AuthService = (function () {
         localStorage.clear();
     };
     AuthService.prototype.isLoggedIn = function () {
+        if (localStorage.getItem('user')) {
+            this.user = JSON.parse(localStorage.getItem('user'));
+        }
         if (this.user === undefined || this.user == null) {
             return false;
         }
