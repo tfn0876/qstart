@@ -1,6 +1,9 @@
 {
   "server": {
     "baseDir": "src",
+    "files": [
+      "build/**/*.{html,htm,css,js}"
+    ],
     "routes": {
       "/node_modules": "node_modules"
     }
