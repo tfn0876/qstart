@@ -1,8 +1,8 @@
-<my-navbar></my-navbar>
-<div class="page-content">
+<my-navbar [hidden]="isActive()"></my-navbar>
+<div class="page-content" [class.my-padding-class]="isActive()">
     <div class="flex-grid no-responsive-future" style="height: 100%;">
         <div class="row" style="height: 100%">
-            <my-sidebar></my-sidebar>
+            <my-sidebar [hidden]="isActive()"></my-sidebar>
             <div class="cell auto-size padding20 bg-white" id="cell-content">
                 <router-outlet>
                 </router-outlet>
