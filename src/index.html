@@ -83,16 +83,14 @@
       }
       
       #pika {
-        width: 200px;
-        height: 120px;
+        width: 120px;
+        height: 80px;
         position: relative;
-        margin: 21%;
+        margin: 19%;
       }
 
     </style>
     <div class="bg-dark pageloading">
-
-      <div data-role="preloader" data-type="square" data-style="color" id="LoadingBusyIndicator"></div>
       <span id="loadingText">Loading...</span>
       <img id="pika" src="pika.gif">
       <progress id="progBar" value="10" max="100" />
@@ -101,7 +99,7 @@
       $(document).ready(function () {
         var prog = 0;
         var interval1 = setInterval(function () {
-          prog += 5;
+          prog += 1;
           $('#progBar').val(prog);
           $('#pika').css('margin-left', (prog - 10) + '%');
           if (prog >= 100) {
