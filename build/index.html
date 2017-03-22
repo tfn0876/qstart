@@ -3,6 +3,7 @@
 
 <head>
   <title>Knowldge Systems Institute : Team Pokemon</title>
+  <link rel="icon" type="image/x-icon" href="favicon.png">
   <base href="/">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +25,7 @@
     });
   </script>
 </head>
+
 <body>
   <my-app>
     <style>
@@ -79,12 +81,20 @@
         margin: auto;
         top: 50%;
       }
+      
+      #pika {
+        width: 200px;
+        height: 120px;
+        position: relative;
+        margin: 21%;
+      }
 
     </style>
     <div class="bg-dark pageloading">
 
       <div data-role="preloader" data-type="square" data-style="color" id="LoadingBusyIndicator"></div>
       <span id="loadingText">Loading...</span>
+      <img id="pika" src="pika.gif">
       <progress id="progBar" value="10" max="100" />
     </div>
     <script>
@@ -93,7 +103,9 @@
         var interval1 = setInterval(function () {
           prog += 5;
           $('#progBar').val(prog);
+          $('#pika').css('margin-left', (prog - 10) + '%');
           if (prog >= 100) {
+            $('#loadingText').text('Go!');
             clearInterval(interval1);
           }
         }, 100);
