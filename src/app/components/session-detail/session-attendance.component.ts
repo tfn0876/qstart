@@ -114,17 +114,19 @@ export class SessionAttendanceComponent implements OnInit {
             this.notiService.warning(`Course Session Attendance Template not been set yet`);
         }
     }
-    selectAttendance(attendance: Attendance, studentSession: StudentSession): void {
+    selectAttendance(attendance: Attendance, studentSession: StudentSession, event: any): void {
+        event.stopPropagation();
         this.currentAttendance = attendance;
         this.currentStudentSession = studentSession;
         this.noteSelected = true;
     }
     SaveAttendanceChange(): void {
         let count: number = this.studentSessionsRepo.length;
-        let observableBatch = [];
+        let observableBatch: any[] = [];
         this.studentSessionsRepo.forEach((studentSession, key) => {
             observableBatch.push(this.studentService.updateStudentSession(studentSession));
         });
+        observableBatch.push(this.courseService.updateCourseSession(this.courseSession));
         Observable.forkJoin(observableBatch).subscribe(data => {
             this.notiService.success(`Update Attendance `);
         });
@@ -137,6 +139,11 @@ export class SessionAttendanceComponent implements OnInit {
                 this.notiService.success(`Update Attendance for ${this.currentStudentSession.student.firstName} ${this.currentStudentSession.student.lastName}`);
                 this.CancelSelectAttendance();
             }
+        });
+    }
+    onEvent(attendance: Attendance, event: any) {
+        this.studentSessionsRepo.forEach((studentSession, key) => {
+            studentSession.attendance.find(r => r.date === attendance.date).attended = attendance.attended;
         });
     }
     CancelSelectAttendance(): void {

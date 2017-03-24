@@ -27,7 +27,7 @@ var LoginComponent = (function () {
             if (data.success) {
                 _this._authService.storeUserData(data.token, data.user);
                 _this._notificationService.success("Welcome Back " + data.user.name + ".You have been logged in successfully.");
-                _this._router.navigate(['students']);
+                _this._router.navigate(['courses']);
             }
             else {
                 _this._notificationService.alert("Failed to authorize with entered username & password.Please check your username & password combination.");

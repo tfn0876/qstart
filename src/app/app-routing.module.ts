@@ -20,19 +20,19 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/courses', pathMatch: 'full' },
   { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
-  { path: 'course-detail/:id', component: CourseSessionComponent },
+  { path: 'course-detail/:id', component: CourseSessionComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {
     path: 'session-detail/:id', component: SessionDetailComponent, children: [
       { path: '', redirectTo: 'currentStudents', pathMatch: 'full' },
-      { path: 'register', component: RegisterStudentComponent },
-      { path: 'currentStudents', component: CurrentStudentsComponent },
-      { path: 'setting', component: SessionSettingComponent },
-      { path: 'attendance', component: SessionAttendanceComponent },
-      { path: 'grading', component: SessionGradingComponent },
-      { path: 'syllabus', component: SessionSyllabusComponent}
+      { path: 'register', component: RegisterStudentComponent, canActivate: [AuthGuard] },
+      { path: 'currentStudents', component: CurrentStudentsComponent, canActivate: [AuthGuard] },
+      { path: 'setting', component: SessionSettingComponent, canActivate: [AuthGuard] },
+      { path: 'attendance', component: SessionAttendanceComponent, canActivate: [AuthGuard] },
+      { path: 'grading', component: SessionGradingComponent, canActivate: [AuthGuard] },
+      { path: 'syllabus', component: SessionSyllabusComponent, canActivate: [AuthGuard]}
     ]
   },
   { path: 'students', component: StudentComponent, canActivate: [AuthGuard] }

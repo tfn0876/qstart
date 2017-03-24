@@ -105,7 +105,8 @@ var SessionAttendanceComponent = (function () {
             this.notiService.warning("Course Session Attendance Template not been set yet");
         }
     };
-    SessionAttendanceComponent.prototype.selectAttendance = function (attendance, studentSession) {
+    SessionAttendanceComponent.prototype.selectAttendance = function (attendance, studentSession, event) {
+        event.stopPropagation();
         this.currentAttendance = attendance;
         this.currentStudentSession = studentSession;
         this.noteSelected = true;
@@ -117,6 +118,7 @@ var SessionAttendanceComponent = (function () {
         this.studentSessionsRepo.forEach(function (studentSession, key) {
             observableBatch.push(_this.studentService.updateStudentSession(studentSession));
         });
+        observableBatch.push(this.courseService.updateCourseSession(this.courseSession));
         Rx_1.Observable.forkJoin(observableBatch).subscribe(function (data) {
             _this.notiService.success("Update Attendance ");
         });
@@ -131,6 +133,11 @@ var SessionAttendanceComponent = (function () {
                 _this.notiService.success("Update Attendance for " + _this.currentStudentSession.student.firstName + " " + _this.currentStudentSession.student.lastName);
                 _this.CancelSelectAttendance();
             }
+        });
+    };
+    SessionAttendanceComponent.prototype.onEvent = function (attendance, event) {
+        this.studentSessionsRepo.forEach(function (studentSession, key) {
+            studentSession.attendance.find(function (r) { return r.date === attendance.date; }).attended = attendance.attended;
         });
     };
     SessionAttendanceComponent.prototype.CancelSelectAttendance = function () {

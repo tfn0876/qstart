@@ -13,9 +13,9 @@
         <div *ngIf="loaded" class="cell offset6 colspan1">
             <a class="button warning" type="button" (click)="GenerateAttendance()"><span class="mif-loop2"></span> RESET</a>
         </div>
-        <!--<div *ngIf="loaded" class="cell colspan1">
+        <div *ngIf="loaded" class="cell colspan1">
             <a class="button primary" type="button" (click)="SaveAttendanceChange()"><span class="mif-mail"></span> SAVE</a>
-        </div>-->
+        </div>
         <div class="cell colspan2">
             <div class="input-control text">
                 <label>Filter</label>
@@ -28,7 +28,12 @@
     <thead>
         <tr>
             <th class="name">STUDENT</th>
-            <th *ngFor="let attendance of courseSession.attendanceTemplate" class="date">{{attendance.date | date : 'MM-dd'}}</th>
+            <th *ngFor="let attendance of courseSession.attendanceTemplate" class="date">{{attendance.date | date : 'MM-dd'}}
+                <label class="switch">
+                        <input type="checkbox" [disabled]="attendance.isHoliday" [(ngModel)]="attendance.attended" (change)="onEvent(attendance, $event)" name="active" class="form-control">
+                        <span class="check"></span>
+                </label>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -37,13 +42,9 @@
                 <p [hidden]="studentSession.dropClass"><span class="mif-user-check fg-green"></span><span>{{studentSession.student.firstName}}  {{studentSession.student.lastName}}</span></p>
                 <p [hidden]="!studentSession.dropClass"><span class="mif-user fg-grayLighter"></span><span>{{studentSession.student.firstName}}  {{studentSession.student.lastName}}</span></p>
             </td>
-            <td *ngFor="let attendance of studentSession.attendance" [ngClass]="{'date':true,'holiday':attendance.isHoliday}">
+            <td [ngClass]="{'attended':attendance.attended, 'attendtd': true}" (click)="attendance.attended=!attendance.attended" *ngFor="let attendance of studentSession.attendance" [ngClass]="{'date':true,'holiday':attendance.isHoliday}">
                 <span> {{attendance.date | date : 'MM-dd'}} </span>
-                <label class="switch">
-                        <input type="checkbox" [disabled]="attendance.isHoliday"  (ngModelChange)="SaveAttendanceChange()"  [(ngModel)]="attendance.attended" name="active" class="form-control">
-                        <span class="check"></span>
-                </label>
-                <button [ngClass]="{'button':true,'hasNote':attendance.description}" [disabled]="attendance.isHoliday" (click)="selectAttendance(attendance, studentSession)"><span class="mif-file-text"></span></button>
+                <button [ngClass]="{'button':true,'hasNote':attendance.description}" [disabled]="attendance.isHoliday" (click)="selectAttendance(attendance, studentSession, $event)"><span class="mif-file-text"></span></button>
             </td>
         </tr>
     </tbody>

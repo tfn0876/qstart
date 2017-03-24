@@ -29,19 +29,19 @@ var routes = [
     { path: 'login', component: login_component_1.LoginComponent },
     { path: 'signup', component: register_component_1.RegisterComponent },
     { path: 'profile', component: profile_component_1.ProfileComponent, canActivate: [auth_guard_1.AuthGuard] },
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: '', redirectTo: '/courses', pathMatch: 'full' },
     { path: 'courses', component: courses_component_1.CoursesComponent, canActivate: [auth_guard_1.AuthGuard] },
-    { path: 'course-detail/:id', component: course_sessions_component_1.CourseSessionComponent },
+    { path: 'course-detail/:id', component: course_sessions_component_1.CourseSessionComponent, canActivate: [auth_guard_1.AuthGuard] },
     { path: 'dashboard', component: dashboard_component_1.DashboardComponent, canActivate: [auth_guard_1.AuthGuard] },
     {
         path: 'session-detail/:id', component: session_component_1.SessionDetailComponent, children: [
             { path: '', redirectTo: 'currentStudents', pathMatch: 'full' },
-            { path: 'register', component: register_student_component_1.RegisterStudentComponent },
-            { path: 'currentStudents', component: current_students_component_1.CurrentStudentsComponent },
-            { path: 'setting', component: session_setting_component_1.SessionSettingComponent },
-            { path: 'attendance', component: session_attendance_component_1.SessionAttendanceComponent },
-            { path: 'grading', component: session_grading_component_1.SessionGradingComponent },
-            { path: 'syllabus', component: session_syllabus_component_1.SessionSyllabusComponent }
+            { path: 'register', component: register_student_component_1.RegisterStudentComponent, canActivate: [auth_guard_1.AuthGuard] },
+            { path: 'currentStudents', component: current_students_component_1.CurrentStudentsComponent, canActivate: [auth_guard_1.AuthGuard] },
+            { path: 'setting', component: session_setting_component_1.SessionSettingComponent, canActivate: [auth_guard_1.AuthGuard] },
+            { path: 'attendance', component: session_attendance_component_1.SessionAttendanceComponent, canActivate: [auth_guard_1.AuthGuard] },
+            { path: 'grading', component: session_grading_component_1.SessionGradingComponent, canActivate: [auth_guard_1.AuthGuard] },
+            { path: 'syllabus', component: session_syllabus_component_1.SessionSyllabusComponent, canActivate: [auth_guard_1.AuthGuard] }
         ]
     },
     { path: 'students', component: student_component_1.StudentComponent, canActivate: [auth_guard_1.AuthGuard] }

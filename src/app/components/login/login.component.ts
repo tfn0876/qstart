@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 			if (data.success) {
 				this._authService.storeUserData(data.token, data.user);
 				this._notificationService.success(`Welcome Back ${data.user.name}.You have been logged in successfully.`);
-				this._router.navigate(['students']);
+				this._router.navigate(['courses']);
 			}
 			else {
 				this._notificationService.alert(`Failed to authorize with entered username & password.Please check your username & password combination.`);
