@@ -31,7 +31,7 @@ var SessionSyllabusComponent = (function () {
         this.gradeItems = [];
         this.gradeRules = [];
         this.newGradeItem = null;
-        this.zoom = 0.5;
+        this.zoom = 2;
     }
     SessionSyllabusComponent.prototype.ngOnInit = function () {
         var _this = this;

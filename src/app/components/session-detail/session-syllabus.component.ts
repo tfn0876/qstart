@@ -52,7 +52,7 @@ export class SessionSyllabusComponent implements OnInit {
         this.gradeItems = [];
         this.gradeRules = [];
         this.newGradeItem = null;
-        this.zoom = 0.5;
+        this.zoom = 2;
     }
     ngOnInit(): void {
         this.route.parent.params
