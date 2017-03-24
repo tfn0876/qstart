@@ -140,6 +140,14 @@ var SessionAttendanceComponent = (function () {
             studentSession.attendance.find(function (r) { return r.date === attendance.date; }).attended = attendance.attended;
         });
     };
+    SessionAttendanceComponent.prototype.setAttendance = function (attendance) {
+        if (attendance.isHoliday) {
+            attendance.attended = false;
+        }
+        else {
+            attendance.attended = !attendance.attended;
+        }
+    };
     SessionAttendanceComponent.prototype.CancelSelectAttendance = function () {
         this.currentAttendance = null;
         this.currentStudentSession = null;

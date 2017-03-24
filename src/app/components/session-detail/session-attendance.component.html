@@ -42,7 +42,7 @@
                 <p [hidden]="studentSession.dropClass"><span class="mif-user-check fg-green"></span><span>{{studentSession.student.firstName}}  {{studentSession.student.lastName}}</span></p>
                 <p [hidden]="!studentSession.dropClass"><span class="mif-user fg-grayLighter"></span><span>{{studentSession.student.firstName}}  {{studentSession.student.lastName}}</span></p>
             </td>
-            <td [ngClass]="{'attended':attendance.attended, 'attendtd': true}" (click)="attendance.attended=!attendance.attended" *ngFor="let attendance of studentSession.attendance" [ngClass]="{'date':true,'holiday':attendance.isHoliday}">
+            <td [ngClass]="{'attended':attendance.attended, 'attendtd': true}" (click)="setAttendance(attendance)" *ngFor="let attendance of studentSession.attendance" [ngClass]="{'date':true,'holiday':attendance.isHoliday}">
                 <span> {{attendance.date | date : 'MM-dd'}} </span>
                 <button [ngClass]="{'button':true,'hasNote':attendance.description}" [disabled]="attendance.isHoliday" (click)="selectAttendance(attendance, studentSession, $event)"><span class="mif-file-text"></span></button>
             </td>

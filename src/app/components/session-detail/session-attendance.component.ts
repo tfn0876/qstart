@@ -146,6 +146,13 @@ export class SessionAttendanceComponent implements OnInit {
             studentSession.attendance.find(r => r.date === attendance.date).attended = attendance.attended;
         });
     }
+    setAttendance(attendance: Attendance) {
+        if (attendance.isHoliday) {
+            attendance.attended = false;
+        } else {
+            attendance.attended = !attendance.attended;
+        }
+    }
     CancelSelectAttendance(): void {
         this.currentAttendance = null;
         this.currentStudentSession = null;
