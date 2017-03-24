@@ -1,6 +1,6 @@
 <div *ngIf="course">
   <h2>{{course.code}} - {{course.title}}
-    <button class="button primary" (click)="goBack()">Back</button>
+    <a class="button primary" type="button" [routerLink]="['/courses']">Back</a>
   </h2>
   <p>{{course.description}}</p>
 </div>

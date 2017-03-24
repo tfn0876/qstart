@@ -1,5 +1,5 @@
 <div *ngIf="course">
-    <h2>{{course.code}} - {{course.title}} - {{courseSession.name}} <button class="button primary" (click)="goBack()">Back</button></h2>
+    <h2>{{course.code}} - {{course.title}} - {{courseSession.name}} <a class="button primary" type="button" [routerLink]="['/course-detail', course._id]">Back</a></h2>
     <h6>Professor: {{courseSession.professor}}</h6>
     <p><em>Date: {{courseSession.startDate | date}}</em> To <em>{{courseSession.endDate | date}}</em>, Day of Week: {{courseSession.daysOftheWeek
         | dayofweek}} </p>
