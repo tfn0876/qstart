@@ -216,3 +216,10 @@ progress {
     height: 600px;
     overflow: scroll;
 }
+table.attendanceSheet td.attended{
+    background-color: palegreen;
+}
+
+table.attendanceSheet td.attendtd{
+    cursor: pointer;
+}
