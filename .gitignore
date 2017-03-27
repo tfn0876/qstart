@@ -4,6 +4,10 @@ jspm_packages
 npm-debug.log
 debug.log
 src/**/*.js
+!src/server.js
+!src/models/*.js
+!src/routes/*.js
+!src/config/*.js
 !src/systemjs.config.extras.js
 !src/systemjs.config.js
 *.js.map
