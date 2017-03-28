@@ -17,55 +17,64 @@
     <div class="frame">
         <div class="heading">Grade Items <span *ngIf="gradeItems">{{calTotal()}}</span><span class="mif-home icon"></span></div>
         <div class="content">
-            <span class="AddMode" *ngIf="newGradeItem">
-                <input type="text" [(ngModel)]="newGradeItem.name" name="title" class="form-control" placeholder="Input name...">
-                <input type="text" [(ngModel)]="newGradeItem.type" name="title" class="form-control" placeholder="Input type...">
-                <input type="number" [(ngModel)]="newGradeItem.fullScore" min="0" name="title" class="form-control" placeholder="Input full score...">
-            </span>
-            <span [hidden]="gradeItemAdd">
-                <button class="button primary" (click)="addGradeItem()">ADD</button>
-            </span>
-            <span [hidden]="!gradeItemAdd">
-                <button class="button primary" (click)="saveGradeItem()">Save</button>
-                <button class="button danger" (click)="cancelGradeItem()">Cancel</button>
-            </span>
-            <table *ngIf="gradeItems" class="bordered">
-                <thead>
-                    <tr>
-                        <th class="name">ITEM NAME</th>
-                        <th class="type">GRADE TYPE</th>
-                        <th class="score">FULL SCORE</th>
-                        <th class="manage">MANAGE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let gradeItem of gradeItems">
-                        <td class="name">
-                            <span [hidden]="gradeItem.editState"> {{gradeItem.name}} </span>
-                            <input type="text" [hidden]="!gradeItem.editState" [(ngModel)]="gradeItem.name" name="title" class="form-control" placeholder="Edit name...">
-                        </td>
-                        <td class="type">
-                            <span [hidden]="gradeItem.editState"> {{gradeItem.type}} </span>
-                            <input type="text" [hidden]="!gradeItem.editState" [(ngModel)]="gradeItem.type" name="title" class="form-control" placeholder="Edit type...">
-                        </td>
-                        <td class="score">
-                            <span [hidden]="gradeItem.editState"> {{gradeItem.fullScore}} </span>
-                            <input type="number" [hidden]="!gradeItem.editState" [(ngModel)]="gradeItem.fullScore" min="0" name="title" class="form-control"
-                                placeholder="Edit type...">
-                        </td>
-                        <td class="manage">
-                            <span [hidden]="gradeItem.editState">  
+            <div class="grid">
+                <div class="row cells5">
+                    <div class="cell4">
+                        <span class="AddMode" *ngIf="newGradeItem">
+                            <input type="text" [(ngModel)]="newGradeItem.name" name="title" class="form-control" placeholder="Input name...">
+                            <input type="text" [(ngModel)]="newGradeItem.type" name="title" class="form-control" placeholder="Input type...">
+                            <input type="number" [(ngModel)]="newGradeItem.fullScore" min="0" name="title" class="form-control" placeholder="Input full score...">
+                        </span>
+                        <span [hidden]="gradeItemAdd">
+                            <button class="button primary" (click)="addGradeItem()">ADD</button>
+                        </span>
+                        <span [hidden]="!gradeItemAdd">
+                            <button class="button primary" (click)="saveGradeItem()">Save</button>
+                            <button class="button danger" (click)="cancelGradeItem()">Cancel</button>
+                        </span>
+                        <table *ngIf="gradeItems" class="bordered">
+                            <thead>
+                                <tr>
+                                    <th class="name">ITEM NAME</th>
+                                    <th class="type">GRADE TYPE</th>
+                                    <th class="score">FULL SCORE</th>
+                                    <th class="manage">MANAGE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let gradeItem of gradeItems">
+                                    <td class="name">
+                                        <span [hidden]="gradeItem.editState"> {{gradeItem.name}} </span>
+                                        <input type="text" [hidden]="!gradeItem.editState" [(ngModel)]="gradeItem.name" name="title" class="form-control" placeholder="Edit name...">
+                                    </td>
+                                    <td class="type">
+                                        <span [hidden]="gradeItem.editState"> {{gradeItem.type}} </span>
+                                        <input type="text" [hidden]="!gradeItem.editState" [(ngModel)]="gradeItem.type" name="title" class="form-control" placeholder="Edit type...">
+                                    </td>
+                                    <td class="score">
+                                        <span [hidden]="gradeItem.editState"> {{gradeItem.fullScore}} </span>
+                                        <input type="number" [hidden]="!gradeItem.editState" [(ngModel)]="gradeItem.fullScore" min="0" name="title" class="form-control"
+                                            placeholder="Edit type...">
+                                    </td>
+                                    <td class="manage">
+                                        <span [hidden]="gradeItem.editState">  
                                 <a class="button primary" type="button" (click)="editGradeItem(gradeItem)">Edit</a>
                                  <a class="button danger" type="button" (click)="deleteGradeItem(gradeItem)">Delete</a>
                             </span>
-                            <span [hidden]="!gradeItem.editState">                  
+                                        <span [hidden]="!gradeItem.editState">                  
                                 <a class="button primary" type="button" (click)="updateGradeItem(gradeItem)">Save</a>
                                 <a class="button danger" type="button" (click)="editGradeItem(gradeItem)">Cancel</a>
                             </span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="cell">
+                        <chart [options]="gradeItemsDonutOptions"></chart>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="frame">
@@ -165,7 +174,7 @@
                 <tbody>
                     <tr *ngFor="let file of courseSession.files">
                         <td>
-                            <a target="blank" href="{{file.url}}">  <span class="mif-file-word mif-2x fg-red"> </span></a>
+                            <a target="blank" href="{{file.url}}"> <span class="mif-file-word mif-2x fg-red"> </span></a>
                         </td>
                         <td>
                             <label class="switch"> 

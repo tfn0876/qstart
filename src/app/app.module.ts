@@ -34,9 +34,16 @@ import { FileSelectDirective } from './utils/fileupload/file-select.directive';
 import { FileDropDirective } from './utils/fileupload/file-drop.directive';
 import { DialogComponent } from './components/upload-dialog/upload-dialog.component';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
+import { ChartModule } from 'angular2-highcharts';
 
 @NgModule({
-  imports: [BrowserModule, HttpModule, FormsModule, AppRoutingModule],
+  imports: [BrowserModule, HttpModule, FormsModule, AppRoutingModule, ChartModule.forRoot(
+    require('highcharts'),
+    require('highcharts/modules/drilldown'),
+    require('highcharts/modules/data'),
+    require('highcharts/modules/exporting'),
+    require('highcharts/highcharts-3d')
+  )],
   declarations: [
     AppComponent,
     CoursesComponent,

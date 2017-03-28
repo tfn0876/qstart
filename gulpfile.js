@@ -71,7 +71,9 @@ gulp.task("libs", () => {
       "metro-ui/docs/js/**",
       "pdfjs-dist/build/**",
       "ng2-pdf-viewer/dist/**",
-      "angular2-jwt/**"
+      "angular2-jwt/**",
+      "highcharts/**",
+      "angular2-highcharts/**"
     ], {
       cwd: "node_modules/**"
     }) /* Glob required here. */

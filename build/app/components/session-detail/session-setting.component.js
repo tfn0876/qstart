@@ -16,6 +16,7 @@ var notification_service_1 = require('../../services/notification.service');
 var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
 var Rx_1 = require('rxjs/Rx');
+var Highcharts = require('highcharts');
 var SessionSettingComponent = (function () {
     function SessionSettingComponent(route, courseService, studentService, location, notiService) {
         this.route = route;
@@ -32,6 +33,90 @@ var SessionSettingComponent = (function () {
         this.gradeRules = [];
         this.newGradeItem = null;
     }
+    SessionSettingComponent.prototype.clearArray = function (inputArray) {
+        while (inputArray != null && inputArray.length > 0) {
+            inputArray.pop();
+        }
+    };
+    SessionSettingComponent.prototype.setOptions = function () {
+        if (this.gradeItems && this.gradeItems.length > 0) {
+            var gradeItemsTypeData_1 = [];
+            var gradeItemsData_1 = [];
+            this.clearArray(gradeItemsTypeData_1);
+            this.clearArray(gradeItemsData_1);
+            var total_1 = this.getTotal();
+            var colors = Highcharts.getOptions().colors;
+            var source = Rx_1.Observable.from(this.gradeItems).groupBy(function (gradeitem) { return gradeitem.type; }).flatMap(function (group) { return group.reduce(function (acc, curr) { return acc.concat([curr]); }, []); });
+            var i_1 = 0;
+            source.subscribe(function (val) {
+                // Print the count
+                var subTotal = val.map(function (gradeItem) { return gradeItem.fullScore; }).reduce(function (total, number) { return total + number; }, 0);
+                gradeItemsTypeData_1.push({ name: val[0].type, y: parseFloat((subTotal * 100 / total_1).toFixed(1)), color: colors[i_1] });
+                val.forEach(function (gradeItem, index, array) {
+                    var drillDataLen = array.length;
+                    var brightness = 0.2 - (index / drillDataLen) / 5;
+                    gradeItemsData_1.push({
+                        name: gradeItem.name,
+                        y: parseFloat((gradeItem.fullScore * 100 / total_1).toFixed(1)),
+                        color: Highcharts.Color(colors[i_1]).brighten(brightness).get()
+                    });
+                });
+                i_1++;
+            }, function (err) {
+                console.log('Error: ' + err);
+            }, function () {
+                console.log('Completed');
+            });
+            this.gradeItemsDonutOptions = {
+                chart: {
+                    type: 'pie'
+                },
+                title: {
+                    text: "Session " + this.courseSession.name + " Grade Items Share"
+                },
+                subtitle: {
+                    text: 'Source: <a href="http://studentmanage.azurewebsites.net/">studentmanage.azurewebsites.net</a>'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total percent grade share'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        shadow: false,
+                        center: ['50%', '50%']
+                    }
+                },
+                tooltip: {
+                    valueSuffix: '%'
+                },
+                series: [{
+                        name: 'Grade Item Types',
+                        data: gradeItemsTypeData_1,
+                        size: '60%',
+                        dataLabels: {
+                            formatter: function () {
+                                return this.y > 5 ? this.point.name : null;
+                            },
+                            color: '#ffffff',
+                            distance: -30
+                        }
+                    }, {
+                        name: 'Grade Items',
+                        data: gradeItemsData_1,
+                        size: '80%',
+                        innerSize: '60%',
+                        dataLabels: {
+                            formatter: function () {
+                                // display only if larger than 1
+                                return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y + '%' : null;
+                            }
+                        }
+                    }]
+            };
+        }
+    };
     SessionSettingComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.parent.params
@@ -62,6 +147,7 @@ var SessionSettingComponent = (function () {
             _this.studentSessionsRepo = data[2];
             _this.studentSessions = [];
             _this.loaded = true;
+            _this.setOptions();
         });
     };
     SessionSettingComponent.prototype.getPercent = function (gradeRule) {
@@ -96,6 +182,7 @@ var SessionSettingComponent = (function () {
                 }
                 else {
                     _this.notiService.success("Save Grade Items Change ");
+                    _this.setOptions();
                 }
             });
         }
@@ -221,6 +308,7 @@ var SessionSettingComponent = (function () {
             }
             else {
                 _this.notiService.success("Save Grade Items Change ");
+                _this.setOptions();
             }
         });
     };

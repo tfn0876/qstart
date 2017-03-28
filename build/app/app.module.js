@@ -39,12 +39,13 @@ var file_select_directive_1 = require('./utils/fileupload/file-select.directive'
 var file_drop_directive_1 = require('./utils/fileupload/file-drop.directive');
 var upload_dialog_component_1 = require('./components/upload-dialog/upload-dialog.component');
 var ng2_pdf_viewer_1 = require('ng2-pdf-viewer');
+var angular2_highcharts_1 = require('angular2-highcharts');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, http_1.HttpModule, forms_1.FormsModule, app_routing_module_1.AppRoutingModule],
+            imports: [platform_browser_1.BrowserModule, http_1.HttpModule, forms_1.FormsModule, app_routing_module_1.AppRoutingModule, angular2_highcharts_1.ChartModule.forRoot(require('highcharts'), require('highcharts/modules/drilldown'), require('highcharts/modules/data'), require('highcharts/modules/exporting'), require('highcharts/highcharts-3d'))],
             declarations: [
                 app_component_1.AppComponent,
                 courses_component_1.CoursesComponent,

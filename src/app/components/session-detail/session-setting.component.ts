@@ -13,6 +13,8 @@ import { StudentSession } from '../../../model/studentSession';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
+import { ChartModule } from 'angular2-highcharts';
+const Highcharts = require('highcharts');
 @Component({
     moduleId: module.id,
     selector: 'session-setting',
@@ -34,6 +36,7 @@ export class SessionSettingComponent implements OnInit {
     attendanceSaveHidden: boolean;
     gradeItemAdd: boolean;
     gradeRuleAdd: boolean;
+    gradeItemsDonutOptions: Object;
     constructor(
         private route: ActivatedRoute,
         private courseService: CourseService,
@@ -48,6 +51,95 @@ export class SessionSettingComponent implements OnInit {
         this.gradeItems = [];
         this.gradeRules = [];
         this.newGradeItem = null;
+    }
+    clearArray(inputArray: Object[]): void {
+        while (inputArray != null && inputArray.length > 0) {
+            inputArray.pop();
+        }
+    }
+    setOptions() {
+        if (this.gradeItems && this.gradeItems.length > 0) {
+            let gradeItemsTypeData = [];
+            let gradeItemsData = [];
+            this.clearArray(gradeItemsTypeData);
+            this.clearArray(gradeItemsData);
+            let total: number = this.getTotal();
+            var colors = Highcharts.getOptions().colors;
+            var source = Observable.from(this.gradeItems).groupBy(gradeitem => gradeitem.type).flatMap(
+                group => group.reduce((acc, curr) => [...acc, curr], [])
+            );
+            let i = 0;
+            source.subscribe(
+                function (val) {
+                    // Print the count
+                    let subTotal: number = val.map(gradeItem => gradeItem.fullScore).reduce(function (total, number) { return total + number; }, 0);
+                    gradeItemsTypeData.push({ name: val[0].type, y: parseFloat((subTotal * 100 / total).toFixed(1)), color: colors[i] });
+                    val.forEach((gradeItem, index, array) => {
+                        let drillDataLen = array.length;
+                        let brightness = 0.2 - (index / drillDataLen) / 5;
+                        gradeItemsData.push({
+                            name: gradeItem.name,
+                            y: parseFloat((gradeItem.fullScore * 100 / total).toFixed(1)),
+                            color: Highcharts.Color(colors[i]).brighten(brightness).get()
+                        });
+                    });
+                    i++;
+                },
+                function (err) {
+                    console.log('Error: ' + err);
+                },
+                function () {
+                    console.log('Completed');
+                })
+            this.gradeItemsDonutOptions = {
+                chart: {
+                    type: 'pie'
+                },
+                title: {
+                    text: `Session ${this.courseSession.name} Grade Items Share`
+                },
+                subtitle: {
+                    text: 'Source: <a href="http://studentmanage.azurewebsites.net/">studentmanage.azurewebsites.net</a>'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total percent grade share'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        shadow: false,
+                        center: ['50%', '50%']
+                    }
+                },
+                tooltip: {
+                    valueSuffix: '%'
+                },
+                series: [{
+                    name: 'Grade Item Types',
+                    data: gradeItemsTypeData,
+                    size: '60%',
+                    dataLabels: {
+                        formatter: function () {
+                            return this.y > 5 ? this.point.name : null;
+                        },
+                        color: '#ffffff',
+                        distance: -30
+                    }
+                }, {
+                    name: 'Grade Items',
+                    data: gradeItemsData,
+                    size: '80%',
+                    innerSize: '60%',
+                    dataLabels: {
+                        formatter: function () {
+                            // display only if larger than 1
+                            return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y + '%' : null;
+                        }
+                    }
+                }]
+            };
+        }
     }
     ngOnInit(): void {
         this.route.parent.params
@@ -79,6 +171,7 @@ export class SessionSettingComponent implements OnInit {
                 this.studentSessionsRepo = data[2];
                 this.studentSessions = [];
                 this.loaded = true;
+                this.setOptions();
             });
     }
     getPercent(gradeRule: GradeRule): number {
@@ -111,6 +204,7 @@ export class SessionSettingComponent implements OnInit {
                         this.notiService.alert(`${data.errmsg}`);
                     } else {
                         this.notiService.success(`Save Grade Items Change `);
+                        this.setOptions();
                     }
                 }
             );
@@ -237,6 +331,7 @@ export class SessionSettingComponent implements OnInit {
                     this.notiService.alert(`${data.errmsg}`);
                 } else {
                     this.notiService.success(`Save Grade Items Change `);
+                    this.setOptions();
                 }
             }
         );
