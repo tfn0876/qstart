@@ -8,6 +8,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { SemestersComponent } from './components/semesters/semesters.component';
+import { SemesterCourseSessionsComponent } from './components/semester-detail/semester-course-sessions.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -49,6 +50,7 @@ import { ChartModule } from 'angular2-highcharts';
     AppComponent,
     CoursesComponent,
     SemestersComponent,
+    SemesterCourseSessionsComponent,
     StudentComponent,
     LoginComponent,
     RegisterComponent,

@@ -13,6 +13,7 @@ var router_1 = require('@angular/router');
 var student_component_1 = require('./components/student/student.component');
 var courses_component_1 = require('./components/courses/courses.component');
 var semesters_component_1 = require('./components/semesters/semesters.component');
+var semester_course_sessions_component_1 = require('./components/semester-detail/semester-course-sessions.component');
 var dashboard_component_1 = require('./components/dashboard/dashboard.component');
 var course_sessions_component_1 = require('./components/course-sessions/course-sessions.component');
 var session_component_1 = require('./components/session-detail/session.component');
@@ -33,6 +34,7 @@ var routes = [
     { path: '', redirectTo: '/courses', pathMatch: 'full' },
     { path: 'courses', component: courses_component_1.CoursesComponent, canActivate: [auth_guard_1.AuthGuard] },
     { path: 'semesters', component: semesters_component_1.SemestersComponent, canActivate: [auth_guard_1.AuthGuard] },
+    { path: 'semester-detail/:id', component: semester_course_sessions_component_1.SemesterCourseSessionsComponent, canActivate: [auth_guard_1.AuthGuard] },
     { path: 'course-detail/:id', component: course_sessions_component_1.CourseSessionComponent, canActivate: [auth_guard_1.AuthGuard] },
     { path: 'dashboard', component: dashboard_component_1.DashboardComponent, canActivate: [auth_guard_1.AuthGuard] },
     {

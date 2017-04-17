@@ -44,6 +44,12 @@ export class CourseService {
         return this.http.get('/api/semesters')
             .map(res => res.json());
     }
+
+    getSemesterCourseSessions(id) {
+        return this.http.get('/api/semester-sessions/' + id)
+            .map(res => res.json());
+    }
+
     getSemester(id) {
         return this.http.get('/api/semester/' + id)
             .map(res => res.json());

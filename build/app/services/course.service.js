@@ -44,6 +44,10 @@ var CourseService = (function () {
         return this.http.get('/api/semesters')
             .map(function (res) { return res.json(); });
     };
+    CourseService.prototype.getSemesterCourseSessions = function (id) {
+        return this.http.get('/api/semester-sessions/' + id)
+            .map(function (res) { return res.json(); });
+    };
     CourseService.prototype.getSemester = function (id) {
         return this.http.get('/api/semester/' + id)
             .map(function (res) { return res.json(); });

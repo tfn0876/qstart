@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StudentComponent } from './components/student/student.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { SemestersComponent } from './components/semesters/semesters.component';
+import { SemesterCourseSessionsComponent } from './components/semester-detail/semester-course-sessions.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CourseSessionComponent } from './components/course-sessions/course-sessions.component';
 import { SessionDetailComponent } from './components/session-detail/session.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/courses', pathMatch: 'full' },
   { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
   { path: 'semesters', component: SemestersComponent, canActivate: [AuthGuard] },
+  { path: 'semester-detail/:id', component: SemesterCourseSessionsComponent, canActivate: [AuthGuard] },
   { path: 'course-detail/:id', component: CourseSessionComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {
