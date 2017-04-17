@@ -81,7 +81,16 @@ export class CourseService {
                 }
             });
     }
-
+    getCourseSessionsByStudentID(id) {
+        return this.http.get('/api/student-course-sessions/' + id)
+            .map(res => {
+                if (res.status < 200 || res.status > 300) {
+                    throw new Error('GetCourseSessions request has failed ' + res.status);
+                } else {
+                    return res.json();
+                }
+            });
+    }
     getCourseSession(id) {
         return this.http.get('/api/session/' + id)
             .map(res => res.json());

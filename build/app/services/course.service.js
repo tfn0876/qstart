@@ -79,6 +79,17 @@ var CourseService = (function () {
             }
         });
     };
+    CourseService.prototype.getCourseSessionsByStudentID = function (id) {
+        return this.http.get('/api/student-course-sessions/' + id)
+            .map(function (res) {
+            if (res.status < 200 || res.status > 300) {
+                throw new Error('GetCourseSessions request has failed ' + res.status);
+            }
+            else {
+                return res.json();
+            }
+        });
+    };
     CourseService.prototype.getCourseSession = function (id) {
         return this.http.get('/api/session/' + id)
             .map(function (res) { return res.json(); });

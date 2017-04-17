@@ -1,9 +1,7 @@
-<h2>Students</h2>
-<div class="row cells12 flex-just-end">
-  <div class="cell colspan1">
-    <button class="button primary" onclick="showMetroDialog('#dialog')"><span class="mif-plus"></span> Create...</button>
-  </div>
-</div>
+<h1 class="text-light">Students<span class="mif-drive-eta place-right"></span></h1>
+<hr class="thin bg-grayLighter">
+<button class="button primary" onclick="showMetroDialog('#dialog')"><span class="mif-plus"></span> Create...</button>
+<hr class="thin bg-grayLighter">
 <!--<table class="dataTable border bordered" data-role="datatable" data-auto-width="false">-->
 <table class=" datatable border bordered" data-role="datatable" data-auto-width="false" *ngIf="students">
   <thead>
@@ -19,41 +17,36 @@
   </thead>
   <tbody>
     <tr *ngFor="let student of students">
-
       <td>
         <span [hidden]="student.isEditMode">{{student.firstName}} - {{student.isEditMode}}</span>
         <input type="text" [(ngModel)]="student.firstName" [hidden]="!student.isEditMode" style="width:90px;">
       </td>
-
       <td>
         <span [hidden]="student.isEditMode">{{student.lastName}}</span>
         <input type="text" [hidden]="!student.isEditMode" [(ngModel)]="student.lastName" style="width:90px;" />
       </td>
-
-
       <td>
         <span [hidden]="student.isEditMode">{{student.email}}</span>
         <input type="text" [hidden]="!student.isEditMode" [(ngModel)]="student.email" style="width:150px;" />
       </td>
-
-
       <td>
         <span [hidden]="student.isEditMode">{{student.phone}}</span>
         <input type="text" [hidden]="!student.isEditMode" [(ngModel)]="student.phone" style="width:90px;" />
       </td>
-
-
       <td class="align-center">
         <input type="checkbox" [checked]="student.active" (click)="updateActiveStatus(student)">
       </td>
-
+      <!--  <td class="align-center">
+<input type="checkbox" [checked]="student.registered" (click) = "updateRegisteredStatus(student)">
+                        </td>                        -->
       <td>
-
         <span [hidden]="student.isEditMode"><a class="button primary"  (click)="setEditState(student,true)">Edit</a></span>
+        <span [hidden]="student.isEditMode"> 
+                    <a class="button info" type="button" [routerLink]="['/student-detail', student._id]">Detail</a>
+                    </span>
         <span [hidden]="student.isEditMode"><a class="button danger" (click)="deleteStudent(student._id)">Delete</a></span>
         <span [hidden]="!student.isEditMode"><a class="button warning"  (click) ="updateStudent(student)">Update</a></span>
         <span [hidden]="!student.isEditMode"><a class="button info"  (click)="setEditState(student,false)">Cancel</a></span>
-
       </td>
     </tr>
   </tbody>
@@ -61,9 +54,7 @@
 
 <div data-role="dialog" id="dialog" class="padding20 dialog" data-close-button="true" style="width: auto; height: auto; visibility: hidden; left: 298px; top: 251px;">
   <h1>Add New Student</h1>
-
   <form>
-
     <div class='grid'>
       <div class="row">
         <div class="cell">
@@ -95,17 +86,20 @@
       </div>
 
       <div class="row">
-        <!--<div class='cell2'>
+
+        <div class='cell2'>
           Is Student Active?&nbsp;&nbsp;
-        </div>-->
-        <!--<div class="cell2">
+        </div>
+
+        <div class="cell2">
+
           <label class="switch">
-                <input type="checkbox" (change)="checkboxChange()" name="active" [(ngModel)]='StudentActiveFlag'
-                [attr.checked]="StudentActiveFlag ? true : null">                          
-                <span  class='check'></span>                                             
-                <span></span>
-          </label>
-        </div>-->
+                            <input type="checkbox" (change)="checkboxChange()" name="active" [(ngModel)]='StudentActiveFlag'
+                          [attr.checked]="StudentActiveFlag ? true : null">                          
+                            <span  class='check'></span>                  
+                            <span></span>
+                    </label>
+        </div>
       </div>
       <div class='row'>
         <button class="button primary" (click)="addStudent(newStudent)">Submit</button>&nbsp;&nbsp;

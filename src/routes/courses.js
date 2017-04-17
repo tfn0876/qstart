@@ -185,93 +185,6 @@ router.put('/session', function (req, res, next) {
     }
 });
 
-// get all students
-router.get('/students', function (req, res, next) {
-    db.students.find(function (err, students) {
-        if (err) {
-            res.send(err);
-        }
-        res.json(students);
-    });
-});
-
-// get single student
-router.get('/student/:id', function (req, res, next) {
-    db.students.findOne({
-        _id: mongojs.ObjectId(req.params.id)
-    }, function (err, student) {
-        if (err) {
-            res.send(err);
-        }
-        res.json(student);
-    });
-});
-
-// save student
-router.post('/student', function (req, res, next) {
-    var student = req.body;
-    var _student = {
-        firstName: student.firstName,
-        lastName: student.lastName,
-        email: student.email,
-        phone: student.phone,
-        active: student.active,
-    };
-    if (!(student.firstName && student.lastName)) {
-        res.status(400);
-        res.json({
-            "error": "Bad data"
-        });
-    } else {
-        db.students.save(_student, function (err, student) {
-            if (err) {
-                res.send(err);
-            }
-            res.json(student);
-        });
-    }
-});
-
-// delete single student
-router.delete('/student/:id', function (req, res, next) {
-    db.students.remove({
-        _id: mongojs.ObjectId(req.params.id)
-    }, function (err, student) {
-        if (err) {
-            res.send(err);
-        }
-        res.json(student);
-    });
-});
-
-// update student
-router.put('/student', function (req, res, next) {
-    var student = req.body;
-    var _student = {
-        firstName: student.firstName,
-        lastName: student.lastName,
-        email: student.email,
-        phone: student.phone,
-        active: student.active,
-    };
-    if (student && student.firstName && student.lastName) {
-        db.students.update({
-            _id: mongojs.ObjectId(student._id)
-        }, _student, {}, function (err, student) {
-            if (err) {
-                res.send(err);
-            }
-            res.json(student);
-        });
-    } else {
-        res.status(400);
-        res.json({
-            "error": "Bad Data"
-        });
-    }
-});
-
-
 // get all student sessions by courseSession id
 router.get('/student-sessions/:id', function (req, res, next) {
     db.studentSessions.find({
@@ -282,6 +195,33 @@ router.get('/student-sessions/:id', function (req, res, next) {
             res.send(err);
         }
         res.json(studentSessions);
+    });
+});
+
+// get all courseSessions by student id
+router.get('/student-course-sessions/:id', function (req, res, next) {
+    db.studentSessions.find({
+        student_id: mongojs.ObjectId(req.params.id)
+    }, function (err, studentSessions) {
+        if (err) {
+            res.status = 400;
+            res.send(err);
+        }
+        db.courseSessions.find(function (er, courseSessions) {
+            if (er) {
+                res.send(er);
+            }
+            console.log("Course Sessions" + courseSessions.length);
+            var cs = [];
+            courseSessions.forEach(function (element) {
+                for (var i = 0; i < studentSessions.length; i++) {
+                    if (element._id.toString() == studentSessions[i].courseSession_id.toString()) {
+                        cs.push(element);
+                    }
+                }
+            }, this);
+            res.json(cs);
+        });
     });
 });
 

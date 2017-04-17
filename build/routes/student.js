@@ -77,7 +77,7 @@ router.delete('/student/:id', function (req, res, next) {
 router.put('/student', function (req, res, next) {
     var student = req.body;
     console.log('Update Student -'+JSON.stringify(student));
-   if (student.firstName && student.lastName && student.email && student.active && student.phone && student.registered) {
+   if (student.firstName && student.lastName && student.email && student.phone) {
    	console.log('Student ID '+ mongojs.ObjectId(student._id));
         var _student = {
             _id : mongojs.ObjectId(student._id),

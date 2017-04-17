@@ -1,0 +1,53 @@
+<div *ngIf="student">
+    <h2>Student Information
+        <button class="button primary" (click)="goBack()">Back</button>
+    </h2>
+    <p>Name: {{student.firstName}} {{student.lastName}} </p>
+    <p>Email: {{student.email}} Phone:{{student.phone}}</p>
+</div>
+<h3>Sessions</h3>
+<table *ngIf="courseSessions" class="dataTable border">
+    <thead>
+        <tr>
+            <th class="title">COURSE</th>
+            <th class="title">NAME</th>
+            <th class="code">PROFESSOR</th>
+            <th class="duration">DURATION</th>
+            <th class="dayOfWeek">DAY OF WEEK</th>
+            <th class="manage">LINK</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let session of courseSessions">
+            <td class="title">
+                <div class="input-control text">
+                    <span *ngIf="session.course" [hidden]="session.editState"> {{session.course.code}} {{session.course.title}}</span>
+                </div>
+            </td>
+            <td class="title">
+                <div class="input-control text">
+                    <span [hidden]="session.editState"> {{session.name}} </span>
+
+                </div>
+            </td>
+            <td class="code">
+                <div class="input-control text">
+                    <span [hidden]="session.editState">  {{session.professor}} </span>
+                </div>
+            </td>
+            <td class="duration">
+                <div class="input-control text">
+                    <span [hidden]="session.editState"> {{session.startDate | date}} To {{session.endDate | date}}</span>
+                </div>
+            </td>
+            <td class="dayOfWeek">
+                <div class="input-control text">
+                    <span>  {{session.daysOftheWeek | dayofweek}} </span>
+                </div>
+            </td>
+            <td class="manage">
+                <a class="button info" type="button" [routerLink]="['/session-detail', session._id]">Detail</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
