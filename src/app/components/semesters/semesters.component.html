@@ -1,0 +1,65 @@
+<h2>Semesters</h2>
+<div class="grid">
+    <div class="row cells12 flex-just-end">
+        <div class="cell colspan1">
+            <a class="button primary" type="button" (click)="addNewSemester()">NEW</a>
+        </div>
+        <div class="cell colspan2">
+            <div class="input-control text">
+                <label>Filter</label>
+                <input type="text" [(ngModel)]="filter" name="Filter" class="form-control" placeholder="Type keyword.." (ngModelChange)="applyfilter()">
+            </div>
+        </div>
+    </div>
+</div>
+<table *ngIf="semesters" class="dataTable border">
+    <thead>
+        <tr>
+            <th class="year">YEAR</th>
+            <th class="term">TERM</th>
+            <th class="startDate">START DATE</th>
+            <th class="endDate">END DATE</th>
+            <th class="manage">MANAGE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let semester of semesters">
+            <td class="year">
+                <div class="input-control text">
+                    <span [hidden]="semester.editState"> {{semester.year}} </span>
+                    <input [hidden]="!semester.editState" type="text" [(ngModel)]="semester.year" name="year" class="form-control" placeholder="Edit Year...">
+                </div>
+            </td>
+            <td class="term">
+                <div class="input-control text">
+                    <span [hidden]="semester.editState"> {{semester.term}} </span>
+                    <input [hidden]="!semester.editState" type="text" [(ngModel)]="semester.term" name="term" class="form-control" placeholder="Edit Term...">
+                </div>
+            </td>
+            <td class="startDate">
+                <div class="input-control text">
+                    <span [hidden]="semester.editState"> {{semester.startDate | date}}  </span>
+                    <input [hidden]="!semester.editState" type="date" class="form-control" [ngModel]="semester.startDate | date:'y-MM-dd'" (ngModelChange)="semester.startDate = $event"
+                        name="startDate">
+                </div>
+            </td>
+            <td class="endDate">
+                <div class="input-control text">
+                    <span [hidden]="semester.editState"> {{semester.endDate | date}}  </span>
+                    <input [hidden]="!semester.editState" type="date" class="form-control" [ngModel]="semester.endDate | date:'y-MM-dd'" (ngModelChange)="semester.endDate = $event"
+                        name="endDate">
+                </div>
+            </td>
+            <td class="manage">
+                <span [hidden]="semester.editState">  
+                    <a class="button primary" type="button" (click)="editSemster(semester)">edit</a>
+                    <input class="button danger" type="button" (click)="deleteSemester(course)" value="Delete">
+                </span>
+                <span [hidden]="!semester.editState">                  
+                <a class="button primary" type="button" (click)="updateSemster(semester)">Save</a>
+                <a class="button danger" type="button" (click)="editSemster(semester)">Cancel</a>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>

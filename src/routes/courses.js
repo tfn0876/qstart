@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongojs = require('mongojs');
-var db = mongojs('mongodb://pokemon_db:cis510_pokemon@ds111529.mlab.com:11529/teaching', ['courses', 'courseSessions', 'students', 'studentSessions', 'users']);
+var db = mongojs('mongodb://pokemon_db:cis510_pokemon@ds111529.mlab.com:11529/teaching', ['courses', 'courseSessions', 'students', 'studentSessions', 'users', 'semesters']);
 //var db = mongojs('mongodb://hardikparikh1988:123456798@ds117889.mlab.com:17889/testdbhardik', ['courses']);
 
 // get all courses
@@ -125,6 +125,7 @@ router.post('/session', function (req, res, next) {
   } else {
     var _courseSessoin = {
       course_id: mongojs.ObjectId(courseSession.course_id),
+      semester_id: mongojs.ObjectId(courseSession.semester_id),
       name: courseSession.name,
       professor: courseSession.professor,
       startDate: courseSession.startDate,
@@ -159,6 +160,7 @@ router.put('/session', function (req, res, next) {
   if (courseSession && courseSession.name && courseSession.professor) {
     var _courseSessoin = {
       course_id: mongojs.ObjectId(courseSession.course_id),
+      semester_id: mongojs.ObjectId(courseSession.semester_id),
       name: courseSession.name,
       professor: courseSession.professor,
       startDate: courseSession.startDate,
@@ -359,6 +361,91 @@ router.put('/student-session', function (req, res, next) {
       "error": "Bad Data"
     });
   }
+});
+
+// get all semesters
+router.get('/semesters', function (req, res, next) {
+    db.semesters.find(function (err, semesters) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(semesters);
+    });
+});
+
+// get single course session 
+router.get('/semester/:id', function (req, res, next) {
+    db.semesters.findOne({
+        _id: mongojs.ObjectId(req.params.id)
+    }, function (err, semester) {
+        if (err) {
+            res.status = 400;
+            res.send(err);
+        }
+        res.json(semester);
+    });
+});
+
+// save course session
+router.post('/semester', function (req, res, next) {
+    var semester = req.body;
+    if (!(semester.year && semester.term)) {
+        res.status(400);
+        res.json({
+            "error": "No year or term has been entered"
+        });
+    } else {
+        var _semester = {
+            year: semester.year,
+            term: semester.term,
+            startDate: semester.startDate,
+            endDate: semester.endDate,
+        };
+        db.semesters.save(_semester, function (err, sem) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(sem);
+        });
+    }
+});
+
+// delete single course session
+router.delete('/semester/:id', function (req, res, next) {
+    db.semesters.remove({
+        _id: mongojs.ObjectId(req.params.id)
+    }, function (err, sem) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(sem);
+    });
+});
+
+// update course
+router.put('/semester', function (req, res, next) {
+    var semester = req.body;
+    if (semester.year && semester.term) {
+        var _semester = {
+            year: semester.year,
+            term: semester.term,
+            startDate: semester.startDate,
+            endDate: semester.endDate,
+        };
+        db.semesters.update({
+            _id: mongojs.ObjectId(semester._id)
+        }, _semester, {}, function (err, sem) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(sem);
+        });
+    } else {
+        res.status(400);
+        res.json({
+            "error": "Bad Data"
+        });
+    }
 });
 
 module.exports = router;

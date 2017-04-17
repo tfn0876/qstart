@@ -40,6 +40,30 @@ var CourseService = (function () {
         return this.http.put('/api/course', JSON.stringify(course), { headers: headers })
             .map(function (res) { return res.json(); });
     };
+    CourseService.prototype.getSemesters = function () {
+        return this.http.get('/api/semesters')
+            .map(function (res) { return res.json(); });
+    };
+    CourseService.prototype.getSemester = function (id) {
+        return this.http.get('/api/semester/' + id)
+            .map(function (res) { return res.json(); });
+    };
+    CourseService.prototype.addSemester = function (newSemester) {
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post('/api/semester', JSON.stringify(newSemester), { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
+    CourseService.prototype.deleteSemester = function (id) {
+        return this.http.delete('/api/semester/' + id)
+            .map(function (res) { return res.json(); });
+    };
+    CourseService.prototype.updateSemester = function (newSemester) {
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put('/api/semester', JSON.stringify(newSemester), { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
     CourseService.prototype.getCourseSessions = function (id) {
         return this.http.get('/api/sessions/' + id)
             .map(function (res) {

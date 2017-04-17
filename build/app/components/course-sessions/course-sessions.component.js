@@ -14,6 +14,7 @@ var course_service_1 = require('../../services/course.service');
 var notification_service_1 = require('../../services/notification.service');
 var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
+var Rx_1 = require('rxjs/Rx');
 var CourseSessionComponent = (function () {
     function CourseSessionComponent(route, courseService, location, notiService) {
         this.route = route;
@@ -25,27 +26,25 @@ var CourseSessionComponent = (function () {
         var _this = this;
         this.courseSessions = [];
         this.courseSessionRepo = [];
-        this.route.params
-            .switchMap(function (params) { return _this.courseService.getCourseSessions(params['id']); })
-            .subscribe(function (courseSessions) {
-            console.log(courseSessions);
-            _this.courseSessions = courseSessions;
+        this.route.params.switchMap(function (params) {
+            return Rx_1.Observable.forkJoin(_this.courseService.getCourseSessions(params['id']), _this.courseService.getCourse(params['id']), _this.courseService.getSemesters());
+        }).subscribe(function (data) {
+            _this.courseSessions = data[0];
+            _this.course = data[1];
+            _this.semesters = data[2];
             _this.courseSessionRepo = [];
-            for (var _i = 0, courseSessions_1 = courseSessions; _i < courseSessions_1.length; _i++) {
-                var c = courseSessions_1[_i];
+            var _loop_1 = function(c) {
+                if (c.semester_id) {
+                    c.semester = _this.semesters.find(function (r) { return r._id == c.semester_id; });
+                }
                 _this.courseSessionRepo.push(c);
+            };
+            for (var _i = 0, _a = _this.courseSessions; _i < _a.length; _i++) {
+                var c = _a[_i];
+                _loop_1(c);
             }
-        }), function (err) {
-            _this.notiService.alert(err);
-        };
-        this.route.params
-            .switchMap(function (params) { return _this.courseService.getCourse(params['id']); })
-            .subscribe(function (course) {
-            _this.course = course;
-            _this.courseService.currentCourse = course;
-        }), function (err) {
-            _this.notiService.alert(err);
-        };
+            _this.courseService.currentCourse = _this.course;
+        });
     };
     CourseSessionComponent.prototype.refreshNewCourseSession = function () {
         this.newCourseSession = {
@@ -109,6 +108,9 @@ var CourseSessionComponent = (function () {
     };
     CourseSessionComponent.prototype.updateCourseSession = function (courseSession) {
         var _this = this;
+        if (courseSession.semester) {
+            courseSession.semester_id = courseSession.semester._id;
+        }
         if (courseSession._id) {
             this.courseService.updateCourseSession(courseSession).subscribe(function (data) {
                 // update course sucessfully

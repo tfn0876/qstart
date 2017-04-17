@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StudentComponent } from './components/student/student.component';
 import { CoursesComponent } from './components/courses/courses.component';
+import { SemestersComponent } from './components/semesters/semesters.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CourseSessionComponent } from './components/course-sessions/course-sessions.component';
 import { SessionDetailComponent } from './components/session-detail/session.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/courses', pathMatch: 'full' },
   { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
+  { path: 'semesters', component: SemestersComponent, canActivate: [AuthGuard] },
   { path: 'course-detail/:id', component: CourseSessionComponent, canActivate: [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   {
@@ -32,7 +34,7 @@ const routes: Routes = [
       { path: 'setting', component: SessionSettingComponent, canActivate: [AuthGuard] },
       { path: 'attendance', component: SessionAttendanceComponent, canActivate: [AuthGuard] },
       { path: 'grading', component: SessionGradingComponent, canActivate: [AuthGuard] },
-      { path: 'syllabus', component: SessionSyllabusComponent, canActivate: [AuthGuard]}
+      { path: 'syllabus', component: SessionSyllabusComponent, canActivate: [AuthGuard] }
     ]
   },
   { path: 'students', component: StudentComponent, canActivate: [AuthGuard] }

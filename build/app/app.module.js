@@ -15,6 +15,7 @@ var forms_1 = require('@angular/forms');
 var auth_guard_1 = require('./guards/auth.guard');
 var app_component_1 = require('./app.component');
 var courses_component_1 = require('./components/courses/courses.component');
+var semesters_component_1 = require('./components/semesters/semesters.component');
 var login_component_1 = require('./components/login/login.component');
 var register_component_1 = require('./components/register/register.component');
 var profile_component_1 = require('./components/profile/profile.component');
@@ -49,6 +50,7 @@ var AppModule = (function () {
             declarations: [
                 app_component_1.AppComponent,
                 courses_component_1.CoursesComponent,
+                semesters_component_1.SemestersComponent,
                 student_component_1.StudentComponent,
                 login_component_1.LoginComponent,
                 register_component_1.RegisterComponent,

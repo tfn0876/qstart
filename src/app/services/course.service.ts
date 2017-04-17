@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Course } from '../../model/course';
+import { Semester } from '../../model/semester';
 import { CourseSession } from '../../model/course-session';
 
 @Injectable()
@@ -39,7 +40,31 @@ export class CourseService {
         return this.http.put('/api/course', JSON.stringify(course), { headers: headers })
             .map(res => res.json());
     }
+    getSemesters() {
+        return this.http.get('/api/semesters')
+            .map(res => res.json());
+    }
+    getSemester(id) {
+        return this.http.get('/api/semester/' + id)
+            .map(res => res.json());
+    }
 
+    addSemester(newSemester) {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post('/api/semester', JSON.stringify(newSemester), { headers: headers })
+            .map(res => res.json());
+    }
+    deleteSemester(id) {
+        return this.http.delete('/api/semester/' + id)
+            .map(res => res.json());
+    }
+    updateSemester(newSemester) {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put('/api/semester', JSON.stringify(newSemester), { headers: headers })
+            .map(res => res.json());
+    }
     getCourseSessions(id) {
         return this.http.get('/api/sessions/' + id)
             .map(res => {
@@ -75,7 +100,7 @@ export class CourseService {
             .map(res => res.json());
     }
     deleteFile(courseSessionId, fileName) {
-         return this.http.delete('/api/file/' + courseSessionId + '_' + fileName)
+        return this.http.delete('/api/file/' + courseSessionId + '_' + fileName)
             .map(res => res.json());
     }
 }
