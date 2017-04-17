@@ -17,6 +17,7 @@
         <tr>
             <th class="title">TITLE</th>
             <th class="code">CODE</th>
+            <th class="code">PREREQUEST</th>
             <th class="description">DESCRIPTION</th>
             <th class="manage">MANAGE</th>
         </tr>
@@ -35,7 +36,12 @@
                     <input [hidden]="!course.editState" type="text" [(ngModel)]="course.code" name="code" class="form-control" placeholder="Edit Code...">
                 </div>
             </td>
-
+            <td class="preRequset">
+                <div class="input-control text">
+                    <span [hidden]="course.editState">  {{course.pre}} </span>
+                    <input [hidden]="!course.editState" type="text" [(ngModel)]="course.pre" name="pre" class="form-control" placeholder="Edit PreRequest...">
+                </div>
+            </td>
             <td class="description">
                 <div class="input-control text">
                     <span data-toggle="bottom" data-original-title="course.description"  [hidden]="course.editState">  {{course.description | truncate}} </span>               
@@ -46,7 +52,7 @@
             <td class="manage">
                 <span [hidden]="course.editState">  
                     <a class="button primary" type="button" (click)="editCourse(course)">edit</a>
-                    <a class="button info" type="button" [routerLink]="['/course-detail', course._id]">Detail</a>
+                    <a class="button info" type="button" [routerLink]="['/course-detail', course._id]">Sessions</a>
                     <input class="button danger" type="button" (click)="deleteCourse(course)" value="Delete">
                 </span>
                 <span [hidden]="!course.editState">                  

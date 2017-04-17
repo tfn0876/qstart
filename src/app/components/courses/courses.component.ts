@@ -32,6 +32,7 @@ export class CoursesComponent {
             title: "",
             _id: "",
             code: "",
+            pre: "",
             description: ""
         };
     }
@@ -82,6 +83,7 @@ export class CoursesComponent {
         var _course = {
             title: course.title,
             code: course.code,
+            pre: course.pre,
             description: course.description
         };
         if (course._id) {

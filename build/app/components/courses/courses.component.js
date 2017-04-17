@@ -32,6 +32,7 @@ var CoursesComponent = (function () {
             title: "",
             _id: "",
             code: "",
+            pre: "",
             description: ""
         };
     };
@@ -85,6 +86,7 @@ var CoursesComponent = (function () {
         var _course = {
             title: course.title,
             code: course.code,
+            pre: course.pre,
             description: course.description
         };
         if (course._id) {
