@@ -21,10 +21,12 @@ var StudentComponent = (function () {
         this.newStudent =
             {
                 _id: "",
+                ksiID: "",
                 firstName: "",
                 lastName: "",
                 phone: "",
                 email: "",
+                email2: "",
                 active: false,
                 editState: false,
                 registered: false
@@ -48,9 +50,11 @@ var StudentComponent = (function () {
         var _this = this;
         var _student = {
             _id: student._id,
+            ksiID: student.ksiID,
             firstName: student.firstName,
             lastName: student.lastName,
             email: student.email,
+            email2: student.email2,
             phone: student.phone,
             active: student.active,
             registered: student.registered
@@ -66,9 +70,11 @@ var StudentComponent = (function () {
         var _this = this;
         var _student = {
             _id: student._id,
+            ksiID: student.ksiID,
             firstName: student.firstName,
             lastName: student.lastName,
             email: student.email,
+            email2: student.email2,
             phone: student.phone,
             active: !student.active,
             registered: student.registered
@@ -85,9 +91,11 @@ var StudentComponent = (function () {
     StudentComponent.prototype.updateRegisteredStatus = function (student) {
         var _student = {
             _id: student._id,
+            ksiID: student.ksiID,
             firstName: student.firstName,
             lastName: student.lastName,
             email: student.email,
+            email2: student.email2,
             phone: student.phone,
             active: student.active,
             registered: !student.registered
@@ -112,10 +120,12 @@ var StudentComponent = (function () {
         this.newStudent =
             {
                 _id: "",
+                ksiID: "",
                 firstName: "",
                 lastName: "",
                 phone: "",
                 email: "",
+                email2: "",
                 active: false,
                 editState: false,
                 registered: false
