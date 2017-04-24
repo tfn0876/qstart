@@ -223,3 +223,7 @@ table.attendanceSheet td.attended{
 table.attendanceSheet td.attendtd{
     cursor: pointer;
 }
+
+.input-control.text {
+    height: auto;
+}
